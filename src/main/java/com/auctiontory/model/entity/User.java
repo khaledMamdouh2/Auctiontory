@@ -23,7 +23,9 @@ import java.util.List;
         @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
         , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
         , @NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName")
+        , @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")
         , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
+        , @NamedQuery(name = "User.findByUserNameAndPassword", query = "SELECT u FROM User u WHERE u.userName = :userName and u.password = :password")
         , @NamedQuery(name = "User.findByType", query = "SELECT u FROM User u WHERE u.type = :type")})
 public class User implements Serializable {
 
@@ -41,12 +43,14 @@ public class User implements Serializable {
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "password")
+    private String password;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 40)
     @Column(name = "email")
     private String email;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
     @Column(name = "type")
     private UserType type;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -65,9 +69,18 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String userName, String email, UserType type) {
+    public User(Integer id, String userName, String password, String email, UserType type) {
         this.id = id;
         this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.type = type;
+    }
+
+    public User(String userName, String password, String email, UserType type) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
         this.email = email;
         this.type = type;
     }
@@ -87,6 +100,16 @@ public class User implements Serializable {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
 
     public String getEmail() {
         return email;
