@@ -1,2 +1,2 @@
 # Auctiontory
-Auctions web app programmed by JSF and EJB
+Auctions web app programmed by JSF, EJB and JPA
