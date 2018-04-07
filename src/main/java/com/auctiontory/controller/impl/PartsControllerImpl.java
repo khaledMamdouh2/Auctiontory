@@ -14,25 +14,25 @@ import java.util.List;
 @SessionScoped
 public class PartsControllerImpl implements PartsAuctionController {
     @Inject
-    private PartsAuctionDAO partsDao;
+    private PartsAuctionDAO partsAuctionDaoImpl;
 
     public List<PartsAuction> loadAll() {
-        return partsDao.loadAll();
+        return partsAuctionDaoImpl.loadAll();
     }
 
     public void save(PartsAuction domain) {
-        partsDao.save(domain);
+        partsAuctionDaoImpl.save(domain);
     }
 
     public void update(PartsAuction domain) {
-        partsDao.update(domain);
+        partsAuctionDaoImpl.update(domain);
     }
 
     public void delete(PartsAuction domain) {
-        partsDao.delete(domain);
+        partsAuctionDaoImpl.delete(domain);
     }
 
     public PartsAuction get(Serializable id) {
-        return partsDao.get(id);
+        return partsAuctionDaoImpl.get(id);
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @SessionScoped
 public class AddBatchAuctionBean {
     @Inject
-    private BatchAuctionController batchCtrl;
+    private BatchAuctionController batchControllerImpl;
     @Inject
     private UserBean userBean; //to get owner from it
 

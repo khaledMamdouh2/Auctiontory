@@ -14,25 +14,25 @@ import java.util.List;
 @SessionScoped
 public class BatchControllerImpl implements BatchAuctionController {
     @Inject
-    private BatchAuctionDAO batchDao;
+    private BatchAuctionDAO batchAuctionDaoImpl;
 
     public List<BatchAuction> loadAll() {
-        return batchDao.loadAll();
+        return batchAuctionDaoImpl.loadAll();
     }
 
     public void save(BatchAuction domain) {
-        batchDao.save(domain);
+        batchAuctionDaoImpl.save(domain);
     }
 
     public void update(BatchAuction domain) {
-        batchDao.update(domain);
+        batchAuctionDaoImpl.update(domain);
     }
 
     public void delete(BatchAuction domain) {
-        batchDao.delete(domain);
+        batchAuctionDaoImpl.delete(domain);
     }
 
     public BatchAuction get(Serializable id) {
-        return batchDao.get(id);
+        return batchAuctionDaoImpl.get(id);
     }
 }
