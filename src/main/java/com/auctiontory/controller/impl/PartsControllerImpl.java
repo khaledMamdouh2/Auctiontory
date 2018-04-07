@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-@SessionScoped
 public class PartsControllerImpl implements PartsAuctionController {
     @Inject
     private PartsAuctionDAO partsAuctionDaoImpl;

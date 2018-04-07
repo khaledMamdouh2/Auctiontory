@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-@SessionScoped
 public class BatchControllerImpl implements BatchAuctionController {
     @Inject
     private BatchAuctionDAO batchAuctionDaoImpl;

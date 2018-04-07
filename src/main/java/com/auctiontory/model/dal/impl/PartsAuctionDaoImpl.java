@@ -3,11 +3,13 @@ package com.auctiontory.model.dal.impl;
 import com.auctiontory.model.dal.PartsAuctionDAO;
 import com.auctiontory.model.entity.PartsAuction;
 
+import javax.enterprise.context.Dependent;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.List;
 
+@Dependent
 public class PartsAuctionDaoImpl implements PartsAuctionDAO , Serializable{
     @PersistenceContext(unitName = "AuctionsPU")
     private EntityManager em;

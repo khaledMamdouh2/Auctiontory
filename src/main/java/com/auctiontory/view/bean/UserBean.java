@@ -16,15 +16,32 @@ public class UserBean implements Serializable {
 
     private String userName, password;
 
+    private boolean registered = false;
+    private boolean loggedIn = false;
+    private boolean incorrectLogin = false;
+
+
     private User user = new User();
 
     public String login() {
+        String ret = null;
         user = null;
         user = userController.login(userName, password);
-        if (user != null)
-            return "index";
-        else
-            return null;
+        if (user != null) {
+            loggedIn = true;
+            ret = "index";
+        } else {
+            loggedIn = false;
+            incorrectLogin = true;
+        }
+        return ret;
+    }
+
+    public String logout() {
+        user = new User();
+        loggedIn = false;
+        incorrectLogin = false;
+        return "index";
     }
 
     public User getUser() {
@@ -50,6 +67,32 @@ public class UserBean implements Serializable {
     public String register() {
         userController.save(user);
         user = null;
-        return "login";
+        registered = true;
+        return null;
     }
+
+    public boolean isRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+
+    public boolean isIncorrectLogin() {
+        return incorrectLogin;
+    }
+
+    public void setIncorrectLogin(boolean incorrectLogin) {
+        this.incorrectLogin = incorrectLogin;
+    }
+
 }
