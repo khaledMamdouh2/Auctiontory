@@ -7,6 +7,7 @@ import com.auctiontory.model.entity.BatchProduct;
 import com.auctiontory.model.entity.User;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 public class AddBatchAuctionBean {
     @Inject
     private BatchAuctionController batchControllerImpl;
-    @Inject
+    @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
     @Inject
     private UserController userControllerImpl;
@@ -26,17 +27,18 @@ public class AddBatchAuctionBean {
     private List<BatchProduct> auctionProducts = new ArrayList();
     private BatchProduct productAdded = new BatchProduct();
 
-    public String addProduct(){
+    public String addProduct() {
         auctionProducts.add(productAdded);
         return null;
     }
-    public String saveAuction(){
+
+    public String saveAuction() {
         addProduct(); //supposingly will be called from seperated form not from here
         User owner = userBean.getUser();
-        if(owner != null){
+        if (owner != null) {
             String username = userBean.getUserName();
             String password = userBean.getPassword();
-            User user = userControllerImpl.login(username , password);
+            User user = userControllerImpl.login(username, password);
             auctionAdded.setOwnerId(user);
             batchControllerImpl.save(auctionAdded);
 
@@ -61,4 +63,11 @@ public class AddBatchAuctionBean {
     }
 
 
+    public UserBean getUserBean() {
+        return userBean;
+    }
+
+    public void setUserBean(UserBean userBean) {
+        this.userBean = userBean;
+    }
 }
