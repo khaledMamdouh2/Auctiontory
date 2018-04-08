@@ -11,25 +11,47 @@
     <ui:define name="main">
 
         <div class="main">
-            <div class="container tim-container" style="padding-top:100px">
-                <div class="tim-typo">
-                    <h2>Auctions Gallery</h2>
-                </div>
+            <div class="container text-center">
+                <h2>
+                    Auctions Gallery
+                    <br/>
+                    <small class="subtitle">
+                        Find best offers here
+                    </small>
+                </h2>
+            </div>
+            <div class="container tim-container">
+
                 <div class="row" id="auctions">
                     <jsp:forEach begin="1" end="20" step="1">
                         <!--This div will hold auction and will be repeated-->
                         <div class="col-sm-3" style="margin-bottom: 40px">
                             <center>
-                                <img src="assets/img/mockup.png" alt="" class="img-rounded"/>
-                                <h4>Auction title</h4>
+                                <h:form>
+                                    <h:commandLink action="#{auctionBean.DoStuff}">
+                                        <img src="assets/img/mockup.png" alt="" class="img-rounded"
+                                             style="width: 250px"/>
+                                    </h:commandLink>
+                                </h:form>
+                                <div style="overflow-wrap: break-word">
+                                    <h4>Auction Test
+                                        <!--TODO: Render this only if admin-->
+                                        <h:panelGroup>by someone</h:panelGroup>
+                                        <label class="label label-warning">Closing Soon</label>
+                                    </h4>
+                                </div>
+                                <h5>Bids: 5</h5>
+
                                 <hr/>
-                                <h6>Bids: 5</h6>
                                 <p class="text-muted">
-                                    $16.99
+                                    Highest: $16.99
+                                    <!--TODO: Render this only if admin-->
+                                    <h:panelGroup>by someone</h:panelGroup>
                                 </p>
                                 <h5>
                                     3d 14h remaining
                                 </h5>
+                                <button class="btn btn-default btn-block btn-fill">Visit</button>
                             </center>
                         </div>
                     </jsp:forEach>
