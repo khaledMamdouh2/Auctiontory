@@ -13,27 +13,29 @@
         <h:form prependId="false">
             <h:outputLabel value="Auction Title"/>
             <br/>
-            <h:inputText id="auction_title" value="addBatchBean.auctionAdded.title" />
+            <h:inputText id="auction_title" value="#{addBatchBean.auctionAdded.title}" />
             <br/>
             <h:outputLabel value="deadline"/>
             <br/>
-            <h:inputText id="auction_deadline" value=""/>
+            <h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}">
+                    <f:convertDateTime />
+            </h:inputText>
             <br/>
 
             <h:outputLabel value="Min Bid"/>
             <br/>
-            <h:inputText id="min_bid" value=""/>
+            <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}"/>
             <br/>
 
             <h:outputLabel value="Product Name"/>
             <br/>
-            <h:inputText id="product_name" value=""/>
+            <h:inputText id="product_name" value="#{addBatchBean.productAdded.name}"/>
             <br/>
             <h:outputLabel value="product Description"/>
             <br/>
-            <h:inputText id="product_description" value=""/>
+            <h:inputText id="product_description" value="#{addBatchBean.productAdded.description}"/>
             <br/>
-            <h:commandButton value="Submit"  action=""/>
+            <h:commandButton value="Submit"  action="#{addBatchBean.saveAuction()}"/>
         </h:form>
     </f:view>
 </h:body>

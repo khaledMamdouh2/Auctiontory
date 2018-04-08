@@ -5,34 +5,32 @@ import com.auctiontory.model.dal.BatchAuctionDAO;
 import com.auctiontory.model.entity.BatchAuction;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-@SessionScoped
 public class BatchControllerImpl implements BatchAuctionController {
     @Inject
-    private BatchAuctionDAO batchAuctionDaoImpl;
+    private BatchAuctionDAO batchDao;
 
     public List<BatchAuction> loadAll() {
-        return batchAuctionDaoImpl.loadAll();
+        return batchDao.loadAll();
     }
 
     public void save(BatchAuction domain) {
-        batchAuctionDaoImpl.save(domain);
+        batchDao.save(domain);
     }
 
     public void update(BatchAuction domain) {
-        batchAuctionDaoImpl.update(domain);
+        batchDao.update(domain);
     }
 
     public void delete(BatchAuction domain) {
-        batchAuctionDaoImpl.delete(domain);
+        batchDao.delete(domain);
     }
 
     public BatchAuction get(Serializable id) {
-        return batchAuctionDaoImpl.get(id);
+        return batchDao.get(id);
     }
 }

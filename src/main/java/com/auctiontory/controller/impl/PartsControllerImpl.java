@@ -5,34 +5,32 @@ import com.auctiontory.model.dal.PartsAuctionDAO;
 import com.auctiontory.model.entity.PartsAuction;
 
 import javax.ejb.Stateless;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
 
 @Stateless
-@SessionScoped
 public class PartsControllerImpl implements PartsAuctionController {
     @Inject
-    private PartsAuctionDAO partsAuctionDaoImpl;
+    private PartsAuctionDAO partsDao;
 
     public List<PartsAuction> loadAll() {
-        return partsAuctionDaoImpl.loadAll();
+        return partsDao.loadAll();
     }
 
     public void save(PartsAuction domain) {
-        partsAuctionDaoImpl.save(domain);
+        partsDao.save(domain);
     }
 
     public void update(PartsAuction domain) {
-        partsAuctionDaoImpl.update(domain);
+        partsDao.update(domain);
     }
 
     public void delete(PartsAuction domain) {
-        partsAuctionDaoImpl.delete(domain);
+        partsDao.delete(domain);
     }
 
     public PartsAuction get(Serializable id) {
-        return partsAuctionDaoImpl.get(id);
+        return partsDao.get(id);
     }
 }

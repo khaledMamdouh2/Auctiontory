@@ -3,11 +3,15 @@ package com.auctiontory.model.dal.impl;
 import com.auctiontory.model.dal.BatchAuctionDAO;
 import com.auctiontory.model.entity.BatchAuction;
 
+import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.List;
 
+@Dependent
+@Named("batchDao")
 public class BatchAuctionDaoImpl implements BatchAuctionDAO , Serializable{
     @PersistenceContext(unitName = "AuctionsPU")
     private EntityManager em;

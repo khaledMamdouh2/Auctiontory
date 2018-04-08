@@ -3,6 +3,7 @@ package com.auctiontory.view.bean;
 import com.auctiontory.controller.BatchAuctionController;
 import com.auctiontory.model.entity.BatchAuction;
 import com.auctiontory.model.entity.BatchProduct;
+import com.auctiontory.model.entity.User;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -22,11 +23,19 @@ public class AddBatchAuctionBean {
     private List<BatchProduct> auctionProducts = new ArrayList();
     private BatchProduct productAdded = new BatchProduct();
 
-    public void addProduct(){
+    public String addProduct(){
         auctionProducts.add(productAdded);
+        return null;
     }
-    public void saveAuction(){
+    public String saveAuction(){
+        addProduct(); //supposingly will be called from seperated form not from here
+        User owner = userBean.getUser();
+        if(owner != null){
+            auctionAdded.setOwnerId(owner);
+            batchControllerImpl.save(auctionAdded);
 
+        }
+        return null;
     }
 
     public BatchAuction getAuctionAdded() {
