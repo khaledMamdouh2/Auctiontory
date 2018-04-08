@@ -29,7 +29,7 @@ public class UserBean implements Serializable {
         user = userController.login(userName, password);
         if (user != null) {
             loggedIn = true;
-            ret = "index";
+            ret = "home";
         } else {
             loggedIn = false;
             incorrectLogin = true;
@@ -41,7 +41,7 @@ public class UserBean implements Serializable {
         user = new User();
         loggedIn = false;
         incorrectLogin = false;
-        return "index";
+        return "home";
     }
 
     public User getUser() {

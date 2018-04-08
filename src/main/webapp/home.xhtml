@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:jsp="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="parent_template.xhtml">
+    ${pageTitle = "Home"}
+    <ui:define name="main">
+
+        <div class="main">
+            <div class="container tim-container" style="padding-top:100px">
+                <div class="tim-typo">
+                    <h2>Auctions Gallery</h2>
+                </div>
+                <div class="row" id="auctions">
+                    <jsp:forEach begin="1" end="20" step="1">
+                        <!--This div will hold auction and will be repeated-->
+                        <div class="col-sm-3" style="margin-bottom: 40px">
+                            <center>
+                                <img src="assets/img/mockup.png" alt="" class="img-rounded"/>
+                                <h4>Auction title</h4>
+                                <hr/>
+                                <h6>Bids: 5</h6>
+                                <p class="text-muted">
+                                    $16.99
+                                </p>
+                                <h5>
+                                    3d 14h remaining
+                                </h5>
+                            </center>
+                        </div>
+                    </jsp:forEach>
+
+                </div>
+                <div class="container pagination-sm" id="paginationDiv">
+                    <ul class="pagination ct-blue">
+
+                        <li><a href="#">&laquo;</a></li>
+
+                        <li><a href="#">1</a></li>
+
+                        <li><a href="#">2</a></li>
+
+                        <li class="active"><a href="#">3</a></li>
+
+                        <li><a href="#">4</a></li>
+
+                        <li><a href="#">5</a></li>
+
+                        <li><a href="#">&raquo;</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end main -->
+    </ui:define>
+</ui:composition>
+
+</html>
