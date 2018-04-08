@@ -1,6 +1,7 @@
 package com.auctiontory.view.bean;
 
 import com.auctiontory.controller.BatchAuctionController;
+import com.auctiontory.controller.UserController;
 import com.auctiontory.model.entity.BatchAuction;
 import com.auctiontory.model.entity.BatchProduct;
 import com.auctiontory.model.entity.User;
@@ -17,7 +18,9 @@ public class AddBatchAuctionBean {
     @Inject
     private BatchAuctionController batchControllerImpl;
     @Inject
-    private UserBean userBean; //to get owner from it
+    private UserBean userBean;
+    @Inject
+    private UserController userControllerImpl;
 
     private BatchAuction auctionAdded = new BatchAuction();
     private List<BatchProduct> auctionProducts = new ArrayList();
@@ -31,7 +34,10 @@ public class AddBatchAuctionBean {
         addProduct(); //supposingly will be called from seperated form not from here
         User owner = userBean.getUser();
         if(owner != null){
-            auctionAdded.setOwnerId(owner);
+            String username = userBean.getUserName();
+            String password = userBean.getPassword();
+            User user = userControllerImpl.login(username , password);
+            auctionAdded.setOwnerId(user);
             batchControllerImpl.save(auctionAdded);
 
         }
