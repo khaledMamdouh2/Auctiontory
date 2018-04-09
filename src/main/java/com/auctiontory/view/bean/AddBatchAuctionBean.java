@@ -28,6 +28,8 @@ public class AddBatchAuctionBean {
     private BatchProduct productAdded = new BatchProduct();
 
     public String addProduct() {
+        //Setting auction to the product
+        productAdded.setAuctionId(auctionAdded);
         auctionProducts.add(productAdded);
         return null;
     }
@@ -40,6 +42,7 @@ public class AddBatchAuctionBean {
             String password = userBean.getPassword();
             User user = userControllerImpl.login(username, password);
             auctionAdded.setOwnerId(user);
+            auctionAdded.setBatchProductList(auctionProducts);
             batchControllerImpl.save(auctionAdded);
 
         }
