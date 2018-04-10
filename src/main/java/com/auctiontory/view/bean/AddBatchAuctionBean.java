@@ -8,13 +8,13 @@ import com.auctiontory.model.entity.User;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "addBatchBean")
-@SessionScoped
+@RequestScoped
 public class AddBatchAuctionBean {
     @Inject
     private BatchAuctionController batchControllerImpl;
@@ -36,10 +36,11 @@ public class AddBatchAuctionBean {
 
     public String saveAuction() {
         addProduct(); //supposingly will be called from seperated form not from here
-        User owner = userBean.getUser();
-        if (owner != null) {
-            String username = userBean.getUserName();
-            String password = userBean.getPassword();
+        String username = userBean.getUserName();
+        String password = userBean.getPassword();
+
+        if (username != null && password != null) {
+
             User user = userControllerImpl.login(username, password);
             auctionAdded.setOwnerId(user);
             auctionAdded.setBatchProductList(auctionProducts);
