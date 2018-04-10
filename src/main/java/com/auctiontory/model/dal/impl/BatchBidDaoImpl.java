@@ -54,11 +54,19 @@ public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
         if (batchAuction != null && user != null) {
             if (bidAmount > batchAuction.getMinBid()) {
                 if (bidAmount > batchAuction.getHighestBid()) {
-                    UserBatchBidPK userBatchBidPK = new UserBatchBidPK(userId, batchAuctionId);
-                    UserBatchBid userBatchBid = new UserBatchBid(userBatchBidPK);
-                    userBatchBid.setPrice(bidAmount);
-                    em.persist(userBatchBid);
-                    bid = true;
+                    if (alreadyBid(userId, batchAuctionId)) {
+                        UserBatchBidPK userBatchBidPK = new UserBatchBidPK(userId, batchAuctionId);
+                        UserBatchBid userBatchBid = get(userBatchBidPK);
+                        userBatchBid.setPrice(bidAmount);
+                        em.persist(userBatchBid);
+                        bid = true;
+                    } else {
+                        UserBatchBidPK userBatchBidPK = new UserBatchBidPK(userId, batchAuctionId);
+                        UserBatchBid userBatchBid = new UserBatchBid(userBatchBidPK);
+                        userBatchBid.setPrice(bidAmount);
+                        em.persist(userBatchBid);
+                        bid = true;
+                    }
                 }
             }
         }
@@ -87,16 +95,16 @@ public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
 
     @Override
     public UserBatchBid get(Serializable id) {
-        return null;
+        return em.find(UserBatchBid.class, id);
     }
 
     @Override
     public void setEntityManager(EntityManager entityManager) {
-
+        this.em = entityManager;
     }
 
     @Override
     public EntityManager getEntityManager() {
-        return null;
+        return em;
     }
 }

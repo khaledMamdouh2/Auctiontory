@@ -68,6 +68,6 @@ public class ViewBatchAuctionBean {
     }
 
     public void testBid() {
-        batchBidControllerImpl.bid(8, 2, 5000);
+        batchBidControllerImpl.bid(8, 2, 8000);
     }
 }
