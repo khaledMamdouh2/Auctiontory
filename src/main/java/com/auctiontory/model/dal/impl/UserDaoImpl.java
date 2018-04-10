@@ -36,17 +36,7 @@ public class UserDaoImpl implements UserDAO, Serializable {
         List<User> users = em.createNamedQuery("User.findByUserName")
                 .setParameter("userName", userName)
                 .getResultList();
-        if (users != null && users.size() > 0) {
-            User user = users.get(0);
-            if (user != null) {
-                isUser = true;
-            } else {
-                isUser = false;
-            }
-        } else {
-            isUser = false;
-        }
-
+        isUser = existOnCondition(users);
         return isUser;
     }
 
@@ -57,18 +47,24 @@ public class UserDaoImpl implements UserDAO, Serializable {
         List<User> users = em.createNamedQuery("User.findByEmail")
                 .setParameter("email", email)
                 .getResultList();
+        isEmailTaken = existOnCondition(users);
+
+        return isEmailTaken;
+    }
+
+    private boolean existOnCondition(List<User> users) {
+        boolean conditionIsTrue;
         if (users != null && users.size() > 0) {
             User user = users.get(0);
             if (user != null) {
-                isEmailTaken = true;
+                conditionIsTrue = true;
             } else {
-                isEmailTaken = false;
+                conditionIsTrue = false;
             }
         } else {
-            isEmailTaken = false;
+            conditionIsTrue = false;
         }
-
-        return isEmailTaken;
+        return conditionIsTrue;
     }
 
     public List<User> loadAll() {

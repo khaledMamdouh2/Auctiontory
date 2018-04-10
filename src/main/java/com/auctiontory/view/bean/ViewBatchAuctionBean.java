@@ -1,6 +1,7 @@
 package com.auctiontory.view.bean;
 
 import com.auctiontory.controller.BatchAuctionController;
+import com.auctiontory.controller.BatchBidController;
 import com.auctiontory.model.entity.BatchAuction;
 import com.auctiontory.model.entity.User;
 import com.auctiontory.model.entity.UserBatchBid;
@@ -25,6 +26,10 @@ public class ViewBatchAuctionBean {
     private BatchAuctionController batchControllerImpl;
 
     @Inject
+    private BatchBidController batchBidControllerImpl;
+
+
+    @Inject
     @Push
     private PushContext auctionsChannel;
 
@@ -33,22 +38,6 @@ public class ViewBatchAuctionBean {
     @PostConstruct
     public void fillAuctions() {
         batchAuctions = (ArrayList<BatchAuction>) batchControllerImpl.loadAll();
-        batchAuctions.forEach(auction -> {
-            Integer highestBid = 0;
-            User highestBidderId = null;
-            if (auction.getUserBatchBidList() != null) {
-                for (UserBatchBid userBatchBid : auction.getUserBatchBidList()) {
-                    if (userBatchBid.getPrice() > highestBid) {
-                        highestBid = userBatchBid.getPrice();
-                        highestBidderId = userBatchBid.getUser();
-                    }
-                }
-            }
-            if (highestBidderId != null) {
-                auction.setHighestBid(highestBid);
-                auction.setHighestBidderId(highestBidderId);
-            }
-        });
     }
 
     public ArrayList<BatchAuction> getBatchAuctions() {
@@ -76,5 +65,9 @@ public class ViewBatchAuctionBean {
 
     public void setBatchControllerImpl(BatchAuctionController batchControllerImpl) {
         this.batchControllerImpl = batchControllerImpl;
+    }
+
+    public void testBid() {
+        batchBidControllerImpl.bid(8, 2, 5000);
     }
 }

@@ -2,6 +2,8 @@ package com.auctiontory.model.dal.impl;
 
 import com.auctiontory.model.dal.BatchAuctionDAO;
 import com.auctiontory.model.entity.BatchAuction;
+import com.auctiontory.model.entity.User;
+import com.auctiontory.model.entity.UserBatchBid;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
@@ -26,6 +28,22 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
             if (a.getUserBatchBidList() != null)
                 a.getUserBatchBidList().size();
         }
+        batchAuctions.forEach(auction -> {
+            Integer highestBid = 0;
+            User highestBidderId = null;
+            if (auction.getUserBatchBidList() != null) {
+                for (UserBatchBid userBatchBid : auction.getUserBatchBidList()) {
+                    if (userBatchBid.getPrice() > highestBid) {
+                        highestBid = userBatchBid.getPrice();
+                        highestBidderId = userBatchBid.getUser();
+                    }
+                }
+            }
+            if (highestBidderId != null) {
+                auction.setHighestBid(highestBid);
+                auction.setHighestBidderId(highestBidderId);
+            }
+        });
         return batchAuctions;
     }
 
@@ -43,7 +61,24 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
     }
 
     public BatchAuction get(Serializable id) {
-        return em.find(BatchAuction.class, id);
+        BatchAuction batchAuction = em.find(BatchAuction.class, id);
+
+        Integer highestBid = 0;
+        User highestBidderId = null;
+        if (batchAuction.getUserBatchBidList() != null) {
+            for (UserBatchBid userBatchBid : batchAuction.getUserBatchBidList()) {
+                if (userBatchBid.getPrice() > highestBid) {
+                    highestBid = userBatchBid.getPrice();
+                    highestBidderId = userBatchBid.getUser();
+                }
+            }
+        }
+        if (highestBidderId != null) {
+            batchAuction.setHighestBid(highestBid);
+            batchAuction.setHighestBidderId(highestBidderId);
+        }
+
+        return batchAuction;
     }
 
     public void setEntityManager(EntityManager entityManager) {

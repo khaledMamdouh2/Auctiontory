@@ -21,7 +21,12 @@
         <div class="main">
             <div class="container text-center">
                 <h:form>
-                    <h:commandButton action="#{viewBatchAuctionBean.notifyUpdate}">
+                    <h:commandButton action="#{viewBatchAuctionBean.notifyUpdate}" value="testSockets">
+                        <f:ajax/>
+                    </h:commandButton>
+                </h:form>
+                <h:form>
+                    <h:commandButton action="#{viewBatchAuctionBean.testBid}" value="Bid">
                         <f:ajax/>
                     </h:commandButton>
                 </h:form>
@@ -42,8 +47,8 @@
                         auctions = JSON.parse(message);
                         console.log(auctions);
                         for (i = 0; i &lt; auctions.length; i++) {
-                            var id = 'auctiontory'+auctions[i].id;
-                            $("#"+id).find()
+                            var id = 'auctiontory' + auctions[i].id;
+                            $("#" + id).find()
 
                         }
                     }
