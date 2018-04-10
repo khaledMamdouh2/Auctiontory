@@ -5,6 +5,11 @@
  */
 package com.auctiontory.model.entity;
 
+import com.auctiontory.controller.listener.BatchAuctionListener;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -15,18 +20,17 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
  * @author mahrous
  */
 @Entity
 @Table(name = "batch_auction")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "BatchAuction.findAll", query = "SELECT b FROM BatchAuction b")
-    , @NamedQuery(name = "BatchAuction.findById", query = "SELECT b FROM BatchAuction b WHERE b.id = :id")
-    , @NamedQuery(name = "BatchAuction.findByDeadline", query = "SELECT b FROM BatchAuction b WHERE b.deadline = :deadline")
-    , @NamedQuery(name = "BatchAuction.findByTitle", query = "SELECT b FROM BatchAuction b WHERE b.title = :title")
-    , @NamedQuery(name = "BatchAuction.findByMinBid", query = "SELECT b FROM BatchAuction b WHERE b.minBid = :minBid")})
+        @NamedQuery(name = "BatchAuction.findAll", query = "SELECT b FROM BatchAuction b")
+        , @NamedQuery(name = "BatchAuction.findById", query = "SELECT b FROM BatchAuction b WHERE b.id = :id")
+        , @NamedQuery(name = "BatchAuction.findByDeadline", query = "SELECT b FROM BatchAuction b WHERE b.deadline = :deadline")
+        , @NamedQuery(name = "BatchAuction.findByTitle", query = "SELECT b FROM BatchAuction b WHERE b.title = :title")
+        , @NamedQuery(name = "BatchAuction.findByMinBid", query = "SELECT b FROM BatchAuction b WHERE b.minBid = :minBid")})
 public class BatchAuction implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -150,7 +154,15 @@ public class BatchAuction implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mahrous.model.entity.BatchAuction[ id=" + id + " ]";
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+        JsonObject jsonObject = jsonObjectBuilder
+                .add("id", id)
+                .add("ownerUserName", getOwnerId().getUserName())
+                .add("deadline", deadline.toString())
+                .add("minBid", minBid)
+                .add("title", title)
+                .build();
+        return jsonObject.toString();
     }
-    
+
 }
