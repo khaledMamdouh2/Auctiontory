@@ -28,15 +28,13 @@
 
                 <!-- add  butch proudect -->
 
-                <f:view>
-                <h:form prependId="false">
                 <div class="modal fade" id="butchProudectModal" tabindex="-1" role="dialog"
                      aria-labelledby="loginModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="loginModalLabel">Add Proudect</h4>
+                                <h4 class="modal-title" id="butchproudectModalLabel">Add Proudect</h4>
                             </div>
                             <hr/>
                             <h:form prependId="false">
@@ -66,14 +64,12 @@
                         </div>
                     </div>
                 </div>
-                </h:form>
-                </f:view>
+
+
 
                 <!-- end add butch proudect-->
 
 
-                <f:view>
-                    <h:form prependId="false">
                         <h:outputLabel value="Auction Title"/>
                         <br/>
                         <h:inputText id="auction_title" value="#{addBatchBean.auctionAdded.title}"
@@ -91,9 +87,10 @@
                         <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}"/>
                         <br/>
                         <h:commandButton value="Submit" action="#{addBatchBean.saveAuction()}"/>
-                    </h:form>
-                </f:view>
+
             </div>
+
+
             <div id="parts">
                 <h1>Add Parts Auction
                     <button href="#" class="btn btn-round btn-default" data-toggle="modal"
@@ -102,15 +99,14 @@
                     </button>
                 </h1>
                 <!-- add parts proudect-->
-                <f:view>
-                    <h:form prependId="false">
+
                         <div class="modal fade" id="partsProudectModal" tabindex="-1" role="dialog"
                              aria-labelledby="loginModalLabel"
                              aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="loginModalLabel">Add Proudect</h4>
+                                        <h4 class="modal-title" id="addProudectModalLabel">Add Proudect</h4>
                                     </div>
                                     <hr/>
                                     <h:form prependId="false">
@@ -147,8 +143,7 @@
                                 </div>
                             </div>
                         </div>
-                    </h:form>
-                </f:view>
+                
                 <!-- end parts proudect-->
 
                 <f:view>
