@@ -8,4 +8,6 @@ public interface UserDAO extends IDaoBase<User> {
 
     boolean isUSer(String userName);
 
+    boolean emailUsed(String email);
+
 }

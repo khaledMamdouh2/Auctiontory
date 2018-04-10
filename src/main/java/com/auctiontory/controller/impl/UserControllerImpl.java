@@ -25,6 +25,11 @@ public class UserControllerImpl implements UserController {
         return userDao.login(userName, password);
     }
 
+    @Override
+    public boolean emailUsed(String email) {
+        return userDao.emailUsed(email);
+    }
+
     public List<User> loadAll() {
         return userDao.loadAll();
     }

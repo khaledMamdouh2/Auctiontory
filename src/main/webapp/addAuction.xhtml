@@ -70,23 +70,23 @@
                 <!-- end add butch proudect-->
 
 
-                        <h:outputLabel value="Auction Title"/>
-                        <br/>
-                        <h:inputText id="auction_title" value="#{addBatchBean.auctionAdded.title}"
-                                     class="form-control"/>
-                        <br/>
-                        <h:outputLabel value="deadline"/>
-                        <br/>
-                        <h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}">
-                            <f:convertDateTime/>
-                        </h:inputText>
-                        <br/>
+                <h:outputLabel value="Auction Title"/>
+                <br/>
+                <h:inputText id="auction_title" value="#{addBatchBean.auctionAdded.title}"
+                             class="form-control"/>
+                <br/>
+                <h:outputLabel value="deadline"/>
+                <br/>
+                <h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}">
+                    <f:convertDateTime/>
+                </h:inputText>
+                <br/>
 
-                        <h:outputLabel value="Min Bid"/>
-                        <br/>
-                        <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}"/>
-                        <br/>
-                        <h:commandButton value="Submit" action="#{addBatchBean.saveAuction()}"/>
+                <h:outputLabel value="Min Bid"/>
+                <br/>
+                <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}"/>
+                <br/>
+                <h:commandButton value="Submit" action="#{addBatchBean.saveAuction()}"/>
 
             </div>
 
@@ -100,50 +100,50 @@
                 </h1>
                 <!-- add parts proudect-->
 
-                        <div class="modal fade" id="partsProudectModal" tabindex="-1" role="dialog"
-                             aria-labelledby="loginModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="addProudectModalLabel">Add Proudect</h4>
-                                    </div>
-                                    <hr/>
-                                    <h:form prependId="false">
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <h6>Proudect Name</h6>
-                                                <h:inputText value=" " label="ProudectName"
-                                                             styleClass="form-control" id="partsPname">
-                                                    <f:validateRequired/>
-                                                </h:inputText>
-                                                <h:message for="pname" styleClass="label label-danger"/>
-                                                <br/>
-                                                <h6>Product description</h6>
-                                                <h:inputText value="" label="ProudectDesc" required="true"
-                                                             styleClass="form-control" id="PartsPdesc">
-                                                    <f:validateRequired/>
-                                                </h:inputText>
-                                                <h:message for="pdesc" styleClass="label label-danger"/>
-                                                <h6>Min Bids</h6>
-                                                <h:inputText value="" label="ProudectDesc" required="true"
-                                                             styleClass="form-control" id="minbds">
-                                                    <f:validateRequired/>
-                                                </h:inputText>
-                                                <h:message for="pdesc" styleClass="label label-danger"/>
-
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <h:commandButton value="Done" styleClass="btn btn-success"/>
-                                        </div>
-                                    </h:form>
-
-                                </div>
+                <div class="modal fade" id="partsProudectModal" tabindex="-1" role="dialog"
+                     aria-labelledby="loginModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="addProudectModalLabel">Add Proudect</h4>
                             </div>
+                            <hr/>
+                            <h:form prependId="false">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <h6>Proudect Name</h6>
+                                        <h:inputText value=" " label="ProudectName"
+                                                     styleClass="form-control" id="partsPname">
+                                            <f:validateRequired/>
+                                        </h:inputText>
+                                        <h:message for="pname" styleClass="label label-danger"/>
+                                        <br/>
+                                        <h6>Product description</h6>
+                                        <h:inputText value="" label="ProudectDesc" required="true"
+                                                     styleClass="form-control" id="PartsPdesc">
+                                            <f:validateRequired/>
+                                        </h:inputText>
+                                        <h:message for="pdesc" styleClass="label label-danger"/>
+                                        <h6>Min Bids</h6>
+                                        <h:inputText value="" label="ProudectDesc" required="true"
+                                                     styleClass="form-control" id="minbds">
+                                            <f:validateRequired/>
+                                        </h:inputText>
+                                        <h:message for="pdesc" styleClass="label label-danger"/>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <h:commandButton value="Done" styleClass="btn btn-success"/>
+                                </div>
+                            </h:form>
+
                         </div>
-                
+                    </div>
+                </div>
+
                 <!-- end parts proudect-->
 
                 <f:view>
