@@ -3,12 +3,12 @@ package com.auctiontory.view.bean;
 import com.auctiontory.controller.UserController;
 import com.auctiontory.model.entity.User;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 
-@ManagedBean
+@Named
 @SessionScoped
 public class UserBean implements Serializable {
     @Inject

@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <ui:composition template="parent_template.xhtml">
+<ui:composition template="parent_template.xhtml">
     ${pageTitle = "Home"}
     <ui:define name="main">
         <div class="container">
@@ -17,72 +17,157 @@
             </select>
         </div>
 
-    <div class="container">
-    <div id="batch">
-        <h1>Add Batch Auction</h1>
-        <f:view>
-            <h:form prependId="false">
-                <h:outputLabel value="Auction Title"/>
-                <br/>
-                <h:inputText id="auction_title" value="#{addBatchBean.auctionAdded.title}" class="form-control"/>
-                <br/>
-                <h:outputLabel value="deadline"/>
-                <br/>
-                <h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}">
-                        <f:convertDateTime />
-                </h:inputText>
-                <br/>
+        <div class="container">
+            <div id="batch">
+                <h1>Add Batch Auction
+                    <button href="#" class="btn btn-round btn-default" data-toggle="modal"
+                            data-target="#butchProudectModal"
+                            style="color:#e5e5e5 ;background-color: #3a87ad ">add proudect
+                    </button>
+                </h1>
 
-                <h:outputLabel value="Min Bid"/>
-                <br/>
-                <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}"/>
-                <br/>
+                <!-- add  butch proudect -->
 
-                <h:outputLabel value="Product Name"/>
-                <br/>
-                <h:inputText id="product_name" value="#{addBatchBean.productAdded.name}"/>
-                <br/>
-                <h:outputLabel value="product Description"/>
-                <br/>
-                <h:inputText id="product_description" value="#{addBatchBean.productAdded.description}"/>
-                <br/>
-                <h:commandButton value="Submit"  action="#{addBatchBean.saveAuction()}"/>
-            </h:form>
-        </f:view>
-    </div>
-        <div id="parts">
-            <h1>Add Parts Auction</h1>
-            <f:view>
+                <f:view>
                 <h:form prependId="false">
-                    <h:outputLabel value="Auction Title"/>
-                    <br/>
-                    <h:inputText  value=""/>
-                    <br/>
-                    <h:outputLabel value="deadline"/>
-                    <br/>
-                    <h:inputText  value=""/>
-                    <br/>
+                <div class="modal fade" id="butchProudectModal" tabindex="-1" role="dialog"
+                     aria-labelledby="loginModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="loginModalLabel">Add Proudect</h4>
+                            </div>
+                            <hr/>
+                            <h:form prependId="false">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <h6>Proudect Name</h6>
+                                        <h:inputText value=" " label="ProudectName"
+                                                     styleClass="form-control" id="pname">
+                                            <f:validateRequired/>
+                                        </h:inputText>
+                                        <h:message for="pname" styleClass="label label-danger"/>
+                                        <br/>
+                                        <h6>Product description</h6>
+                                        <h:inputText value="" label="ProudectDesc" required="true"
+                                                     styleClass="form-control" id="pdesc">
+                                            <f:validateRequired/>
+                                        </h:inputText>
+                                        <h:message for="pdesc" styleClass="label label-danger"/>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <h:commandButton value="Done" styleClass="btn btn-success"/>
+                                </div>
+                            </h:form>
 
-                    <h:outputLabel value="Product Name"/>
-                    <br/>
-                    <h:inputText  value=""/>
-                    <br/>
-                    <h:outputLabel value="Description"/>
-                    <br/>
-                    <h:inputText  value=""/>
-                    <br/>
-
-                    <h:outputLabel value="Min Bid"/>
-                    <br/>
-                    <h:inputText  value=""/>
-                    <br/>
-                    <h:commandButton value="Submit" />
+                        </div>
+                    </div>
+                </div>
                 </h:form>
-            </f:view>
+                </f:view>
+
+                <!-- end add butch proudect-->
+
+
+                <f:view>
+                    <h:form prependId="false">
+                        <h:outputLabel value="Auction Title"/>
+                        <br/>
+                        <h:inputText id="auction_title" value="#{addBatchBean.auctionAdded.title}"
+                                     class="form-control"/>
+                        <br/>
+                        <h:outputLabel value="deadline"/>
+                        <br/>
+                        <h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}">
+                            <f:convertDateTime/>
+                        </h:inputText>
+                        <br/>
+
+                        <h:outputLabel value="Min Bid"/>
+                        <br/>
+                        <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}"/>
+                        <br/>
+                        <h:commandButton value="Submit" action="#{addBatchBean.saveAuction()}"/>
+                    </h:form>
+                </f:view>
+            </div>
+            <div id="parts">
+                <h1>Add Parts Auction
+                    <button href="#" class="btn btn-round btn-default" data-toggle="modal"
+                            data-target="#partsProudectModal"
+                            style="color:#e5e5e5 ;background-color: #3a87ad ">add proudect
+                    </button>
+                </h1>
+                <!-- add parts proudect-->
+                <f:view>
+                    <h:form prependId="false">
+                        <div class="modal fade" id="partsProudectModal" tabindex="-1" role="dialog"
+                             aria-labelledby="loginModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="loginModalLabel">Add Proudect</h4>
+                                    </div>
+                                    <hr/>
+                                    <h:form prependId="false">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <h6>Proudect Name</h6>
+                                                <h:inputText value=" " label="ProudectName"
+                                                             styleClass="form-control" id="partsPname">
+                                                    <f:validateRequired/>
+                                                </h:inputText>
+                                                <h:message for="pname" styleClass="label label-danger"/>
+                                                <br/>
+                                                <h6>Product description</h6>
+                                                <h:inputText value="" label="ProudectDesc" required="true"
+                                                             styleClass="form-control" id="PartsPdesc">
+                                                    <f:validateRequired/>
+                                                </h:inputText>
+                                                <h:message for="pdesc" styleClass="label label-danger"/>
+                                                <h6>Min Bids</h6>
+                                                <h:inputText value="" label="ProudectDesc" required="true"
+                                                             styleClass="form-control" id="minbds">
+                                                    <f:validateRequired/>
+                                                </h:inputText>
+                                                <h:message for="pdesc" styleClass="label label-danger"/>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <h:commandButton value="Done" styleClass="btn btn-success"/>
+                                        </div>
+                                    </h:form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </f:view>
+                <!-- end parts proudect-->
+
+                <f:view>
+                    <h:form prependId="false">
+                        <h:outputLabel value="Auction Title"/>
+                        <br/>
+                        <h:inputText value=""/>
+                        <br/>
+                        <h:outputLabel value="deadline"/>
+                        <br/>
+                        <h:inputText value=""/>
+                        <br/>
+                        <h:commandButton value="Submit"/>
+                    </h:form>
+                </f:view>
+            </div>
         </div>
-    </div>
 
     </ui:define>
-    </ui:composition>
+</ui:composition>
 
 </html>

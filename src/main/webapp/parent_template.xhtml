@@ -10,7 +10,10 @@
     <link rel="icon" type="image/png" href="assets/img/favicon.png"/>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>#{pageTitle}</title>
+
+    <title>
+        <ui:insert name="title"/>
+    </title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
     <meta name="viewport" content="width=device-width"/>
@@ -25,17 +28,19 @@
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"/>
     <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'/>
     <style type="text/css">
-        #parts{display: none;}
+        #parts {
+            display: none;
+        }
     </style>
     <script type="text/javascript">
-        function changeAuction(value){
-            if(value=="batch"){
-                document.getElementById("parts").style.display= "none";
-                document.getElementById("batch").style.display= "block";
+        function changeAuction(value) {
+            if (value == "batch") {
+                document.getElementById("parts").style.display = "none";
+                document.getElementById("batch").style.display = "block";
             }
-            else{
-                document.getElementById("batch").style.display= "none";
-                document.getElementById("parts").style.display= "block";
+            else {
+                document.getElementById("batch").style.display = "none";
+                document.getElementById("parts").style.display = "block";
             }
         }
 
@@ -64,34 +69,34 @@
                             Auctiontory
                         </a>
                     </div>
-                        <h:panelGroup rendered="#{not userBean.loggedIn}">
-                            <div class="collapse navbar-collapse" id="navbar-collapse-div">
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li><a href="#" data-toggle="modal" data-target="#registrationModal">Register</a>
-                                    </li>
-                                    <li>
-                                        <button href="#" class="btn btn-round btn-default" data-toggle="modal"
-                                                data-target="#loginModal">Sign in
-                                        </button>
-                                    </li>
-                                </ul>
+                    <h:panelGroup rendered="#{not userBean.loggedIn}">
+                        <div class="collapse navbar-collapse" id="navbar-collapse-div">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#" data-toggle="modal" data-target="#registrationModal">Register</a>
+                                </li>
+                                <li>
+                                    <button href="#" class="btn btn-round btn-default" data-toggle="modal"
+                                            data-target="#loginModal">Sign in
+                                    </button>
+                                </li>
+                            </ul>
 
-                            </div><!-- /.navbar-collapse -->
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{userBean.loggedIn}">
-                            <div class="collapse navbar-collapse" id="navbar-collapse-div">
-                                <ul class="nav navbar-nav navbar-right">
-                                    <li>
-                                        <h:form>
-                                            <h:commandButton action="#{userBean.logout}" value="Logout"
-                                                             styleClass="btn btn-danger btn-fill"/>
-                                        </h:form>
-                                    </li>
-                                </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{userBean.loggedIn}">
+                        <div class="collapse navbar-collapse" id="navbar-collapse-div">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <h:form>
+                                        <h:commandButton action="#{userBean.logout}" value="Logout"
+                                                         styleClass="btn btn-danger btn-fill"/>
+                                    </h:form>
+                                </li>
+                            </ul>
 
-                            </div><!-- /.navbar-collapse -->
+                        </div><!-- /.navbar-collapse -->
 
-                        </h:panelGroup>
+                    </h:panelGroup>
                 </div><!-- /.container-fluid -->
 
             </nav>
