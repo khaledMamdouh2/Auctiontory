@@ -4,6 +4,7 @@ import com.auctiontory.controller.BatchAuctionController;
 import com.auctiontory.model.entity.BatchAuction;
 import com.auctiontory.model.entity.User;
 import com.auctiontory.model.entity.UserBatchBid;
+import com.google.gson.Gson;
 import org.omnifaces.cdi.Push;
 import org.omnifaces.cdi.PushContext;
 
@@ -12,6 +13,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.json.*;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 
 @Named
@@ -57,12 +61,13 @@ public class ViewBatchAuctionBean {
 
     public void notifyUpdate() {
         fillAuctions();
-        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        Gson gson = new Gson();
+        ArrayList<BatchAuction> batchAuctionsGson = new ArrayList<>();
         for (BatchAuction batchAuction : batchAuctions) {
-            jsonArrayBuilder.add(batchAuction.toString());
+            batchAuctionsGson.add(new BatchAuction(batchAuction));
         }
-        JsonArray auctions = jsonArrayBuilder.build();
-        auctionsChannel.send(auctions);
+        String auctionsStr = gson.toJson(batchAuctionsGson);
+        auctionsChannel.send(auctionsStr);
     }
 
     public BatchAuctionController getBatchControllerImpl() {

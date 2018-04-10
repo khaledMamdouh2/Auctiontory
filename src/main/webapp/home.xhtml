@@ -20,6 +20,11 @@
 
         <div class="main">
             <div class="container text-center">
+                <h:form>
+                    <h:commandButton action="#{viewBatchAuctionBean.notifyUpdate}">
+                        <f:ajax/>
+                    </h:commandButton>
+                </h:form>
                 <h2>
                     Auctions Gallery
                     <br/>
@@ -33,11 +38,14 @@
                 <script type="text/javascript">
                     function socketListener(message, channel, event) {
                         var c = "";
-                        console.log(message);
-                        for (var auction in message) {
+
+                        auctions = JSON.parse(message);
+                        console.log(auctions);
+                        for (i = 0; i &lt; auctions.length; i++) {
+                            var id = 'auctiontory'+auctions[i].id;
+                            $("#"+id).find()
 
                         }
-                        document.getElementById("content").innerHTML = c;
                     }
                 </script>
                 <div class="row" id="auctions">
@@ -67,8 +75,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <p class="text-muted">
-                                            Highest: $#{auction.highestBid}
-                                            <ui:debug hotkey="x"/>
+                                            <di>Highest: $#{auction.highestBid}</span>
                                             <h:panelGroup
                                                     rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}">by #{auction.highestBidderId.userName} </h:panelGroup>
                                         </p>

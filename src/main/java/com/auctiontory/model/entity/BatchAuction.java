@@ -174,17 +174,13 @@ public class BatchAuction implements Serializable {
         this.highestBidderId = highestBidderId;
     }
 
-    @Override
-    public String toString() {
-        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-        JsonObject jsonObject = jsonObjectBuilder
-                .add("id", id)
-                .add("ownerUserName", getOwnerId().getUserName())
-                .add("deadline", deadline.toString())
-                .add("minBid", minBid)
-                .add("title", title)
-                .build();
-        return jsonObject.toString();
+    // Copy Constructor to use with JSON
+    public BatchAuction(BatchAuction batchAuction) {
+        this.id = batchAuction.id;
+        this.title = batchAuction.title;
+        this.deadline = batchAuction.deadline;
+        this.minBid = batchAuction.minBid;
+        this.highestBid = batchAuction.highestBid;
     }
 
 }
