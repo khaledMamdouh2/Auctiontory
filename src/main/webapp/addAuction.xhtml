@@ -24,6 +24,7 @@
                             data-target="#butchProudectModal"
                             style="color:#e5e5e5 ;background-color: #3a87ad ">add proudect
                     </button>
+                    <h5 class="text-success" >#{addBatchBean.productsNumber} products added</h5>
                 </h1>
 
                 <!-- add  butch proudect -->
@@ -41,14 +42,14 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <h6>Proudect Name</h6>
-                                        <h:inputText value=" " label="ProudectName"
+                                        <h:inputText value="#{addBatchBean.productAdded.name}" label="ProudectName"
                                                      styleClass="form-control" id="pname">
                                             <f:validateRequired/>
                                         </h:inputText>
                                         <h:message for="pname" styleClass="label label-danger"/>
                                         <br/>
                                         <h6>Product description</h6>
-                                        <h:inputText value="" label="ProudectDesc" required="true"
+                                        <h:inputText value="#{addBatchBean.productAdded.description}" label="ProudectDesc" required="true"
                                                      styleClass="form-control" id="pdesc">
                                             <f:validateRequired/>
                                         </h:inputText>
@@ -57,7 +58,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <h:commandButton value="Done" styleClass="btn btn-success"/>
+                                    <h:commandButton value="Done" styleClass="btn btn-success" action="#{addBatchBean.addProduct()}"/>
                                 </div>
                             </h:form>
 
@@ -68,25 +69,26 @@
 
 
                 <!-- end add butch proudect-->
-
-
+                        <h:form>
+                        <h:outputLabel value="#{addBatchBean.msg}" styleClass="text-success" /> <br/>
+                            <h:outputLabel value="#{addBatchBean.errMsg}" styleClass="text-danger" /><br/>
                         <h:outputLabel value="Auction Title"/>
                         <br/>
                         <h:inputText id="auction_title" value="#{addBatchBean.auctionAdded.title}"
                                      class="form-control"/>
                         <br/>
                         <h:outputLabel value="deadline"/>
-                        <br/>
-                        <h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}">
+                        <h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}" class="form-control">
                             <f:convertDateTime/>
                         </h:inputText>
                         <br/>
 
                         <h:outputLabel value="Min Bid"/>
                         <br/>
-                        <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}"/>
+                        <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}" class="form-control"/>
                         <br/>
                         <h:commandButton value="Submit" action="#{addBatchBean.saveAuction()}"/>
+                        </h:form>
 
             </div>
 
@@ -97,6 +99,8 @@
                             data-target="#partsProudectModal"
                             style="color:#e5e5e5 ;background-color: #3a87ad ">add proudect
                     </button>
+                    <h5 class="text-success" >#{addPartsBean.productsNumber} products added</h5>
+
                 </h1>
                 <!-- add parts proudect-->
 
@@ -113,20 +117,20 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <h6>Proudect Name</h6>
-                                                <h:inputText value=" " label="ProudectName"
+                                                <h:inputText value="#{addPartsBean.productAdded.name}" label="ProudectName"
                                                              styleClass="form-control" id="partsPname">
                                                     <f:validateRequired/>
                                                 </h:inputText>
                                                 <h:message for="pname" styleClass="label label-danger"/>
                                                 <br/>
                                                 <h6>Product description</h6>
-                                                <h:inputText value="" label="ProudectDesc" required="true"
+                                                <h:inputText value="#{addPartsBean.productAdded.description}" label="ProudectDesc" required="true"
                                                              styleClass="form-control" id="PartsPdesc">
                                                     <f:validateRequired/>
                                                 </h:inputText>
                                                 <h:message for="pdesc" styleClass="label label-danger"/>
                                                 <h6>Min Bids</h6>
-                                                <h:inputText value="" label="ProudectDesc" required="true"
+                                                <h:inputText value="#{addPartsBean.productAdded.minBid}" label="ProudectDesc" required="true"
                                                              styleClass="form-control" id="minbds">
                                                     <f:validateRequired/>
                                                 </h:inputText>
@@ -136,7 +140,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <h:commandButton value="Done" styleClass="btn btn-success"/>
+                                            <h:commandButton value="Done" styleClass="btn btn-success" action="#{addPartsBean.addProduct()}"/>
                                         </div>
                                     </h:form>
 
@@ -146,19 +150,21 @@
                 
                 <!-- end parts proudect-->
 
-                <f:view>
+                <br/>
+
                     <h:form prependId="false">
+                        <h:outputLabel value="#{addBatchBean.msg}" styleClass="text-success" /><br/>
+                        <h:outputLabel value="#{addBatchBean.errMsg}" styleClass="text-danger" /><br/>
                         <h:outputLabel value="Auction Title"/>
                         <br/>
-                        <h:inputText value=""/>
+                        <h:inputText value="#{addPartsBean.auctionAdded.title}" class="form-control"/>
                         <br/>
                         <h:outputLabel value="deadline"/>
                         <br/>
-                        <h:inputText value=""/>
+                        <h:inputText value="#{addPartsBean.auctionAdded.deadline}" class="form-control"/>
                         <br/>
-                        <h:commandButton value="Submit"/>
+                        <h:commandButton value="Submit" action="#{addPartsBean.saveAuction()}"/>
                     </h:form>
-                </f:view>
             </div>
         </div>
 
