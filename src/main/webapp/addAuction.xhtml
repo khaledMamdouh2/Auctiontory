@@ -7,7 +7,9 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <ui:composition template="parent_template.xhtml">
-    ${pageTitle = "Home"}
+    <ui:define name="title">
+        Add Auction
+    </ui:define>
     <ui:define name="main">
         <div class="container">
             <label class="text-center">Select auction type:</label>
@@ -29,44 +31,45 @@
                 <!-- add  butch proudect -->
 
                 <f:view>
-                <h:form prependId="false">
-                <div class="modal fade" id="butchProudectModal" tabindex="-1" role="dialog"
-                     aria-labelledby="loginModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="loginModalLabel">Add Proudect</h4>
-                            </div>
-                            <hr/>
-                            <h:form prependId="false">
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <h6>Proudect Name</h6>
-                                        <h:inputText value=" " label="ProudectName"
-                                                     styleClass="form-control" id="pname">
-                                            <f:validateRequired/>
-                                        </h:inputText>
-                                        <h:message for="pname" styleClass="label label-danger"/>
-                                        <br/>
-                                        <h6>Product description</h6>
-                                        <h:inputText value="" label="ProudectDesc" required="true"
-                                                     styleClass="form-control" id="pdesc">
-                                            <f:validateRequired/>
-                                        </h:inputText>
-                                        <h:message for="pdesc" styleClass="label label-danger"/>
+                    <h:form prependId="false">
+                        <div class="modal fade" id="butchProudectModal" tabindex="-1" role="dialog"
+                             aria-labelledby="loginModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="loginModalLabel">Add Proudect</h4>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <h:commandButton value="Done" styleClass="btn btn-success"/>
-                                </div>
-                            </h:form>
+                                    <hr/>
+                                    <h:form prependId="false">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <h6>Proudect Name</h6>
+                                                <h:inputText value=" " label="ProudectName"
+                                                             styleClass="form-control" id="pname">
+                                                    <f:validateRequired/>
+                                                </h:inputText>
+                                                <h:message for="pname" styleClass="label label-danger"/>
+                                                <br/>
+                                                <h6>Product description</h6>
+                                                <h:inputText value="" label="ProudectDesc" required="true"
+                                                             styleClass="form-control" id="pdesc">
+                                                    <f:validateRequired/>
+                                                </h:inputText>
+                                                <h:message for="pdesc" styleClass="label label-danger"/>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
+                                            <h:commandButton value="Done" styleClass="btn btn-success"/>
+                                        </div>
+                                    </h:form>
 
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                </h:form>
+                    </h:form>
                 </f:view>
 
                 <!-- end add butch proudect-->
@@ -139,7 +142,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                            </button>
                                             <h:commandButton value="Done" styleClass="btn btn-success"/>
                                         </div>
                                     </h:form>
