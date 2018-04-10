@@ -1,9 +1,9 @@
 package com.auctiontory.view.bean;
 
-import com.auctiontory.controller.BatchAuctionController;
+import com.auctiontory.controller.PartsAuctionController;
 import com.auctiontory.controller.UserController;
-import com.auctiontory.model.entity.BatchAuction;
-import com.auctiontory.model.entity.BatchProduct;
+import com.auctiontory.model.entity.PartsAuction;
+import com.auctiontory.model.entity.PartsProduct;
 import com.auctiontory.model.entity.User;
 
 import javax.faces.bean.ManagedBean;
@@ -14,53 +14,52 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean(name = "addBatchBean")
+@ManagedBean(name = "addPartsBean")
 @SessionScoped
-public class AddBatchAuctionBean {
+public class AddPartsAuctionBean {
     @Inject
-    private BatchAuctionController batchControllerImpl;
+    private PartsAuctionController partsControllerImpl;
     @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
     @Inject
     private UserController userControllerImpl;
 
-    private BatchAuction auctionAdded = new BatchAuction();
-    private List<BatchProduct> auctionProducts = new ArrayList();
-    private BatchProduct productAdded = new BatchProduct();
+    private PartsAuction auctionAdded = new PartsAuction();
+    private List<PartsProduct> auctionProducts = new ArrayList();
+    private PartsProduct productAdded = new PartsProduct();
 
     private String msg , errMsg;
     private int productsNumber;
 
-
     public String addProduct() {
-
         auctionProducts.add(productAdded);
-        errMsg = null;
         return "addAuction";
     }
+
 
     public String saveAuction() {
         if(auctionProducts.size()>0) {
 
-            for (BatchProduct p : auctionProducts) {
+            for(PartsProduct p : auctionProducts){
                 p.setAuctionId(auctionAdded);
             }
+
             String username = userBean.getUserName();
             String password = userBean.getPassword();
 
             if (username != null && password != null) {
-
                 User user = userControllerImpl.login(username, password);
                 auctionAdded.setOwnerId(user);
-                auctionAdded.setBatchProductList(auctionProducts);
-                batchControllerImpl.save(auctionAdded);
+                auctionAdded.setPartsProductList(auctionProducts);
+                partsControllerImpl.save(auctionAdded);
                 msg = "auction added successfully";
                 /////resetting data////
                 errMsg = null;
-                auctionAdded = new BatchAuction();
-                productAdded = new BatchProduct();
+                auctionAdded = new PartsAuction();
+                productAdded = new PartsProduct();
                 auctionProducts = new ArrayList<>();
             }
+
         }
         else{
             errMsg = "sorry, you must add product at least to the auction";
@@ -69,19 +68,19 @@ public class AddBatchAuctionBean {
         return "addAuction";
     }
 
-    public BatchAuction getAuctionAdded() {
+    public PartsAuction getAuctionAdded() {
         return auctionAdded;
     }
 
-    public void setAuctionAdded(BatchAuction auctionAdded) {
+    public void setAuctionAdded(PartsAuction auctionAdded) {
         this.auctionAdded = auctionAdded;
     }
 
-    public BatchProduct getProductAdded() {
+    public PartsProduct getProductAdded() {
         return productAdded;
     }
 
-    public void setProductAdded(BatchProduct productAdded) {
+    public void setProductAdded(PartsProduct productAdded) {
         this.productAdded = productAdded;
     }
 
