@@ -12,12 +12,19 @@ import java.util.List;
 
 @Dependent
 @Named("batchDao")
-public class BatchAuctionDaoImpl implements BatchAuctionDAO , Serializable{
+public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
     @PersistenceContext(unitName = "AuctionsPU")
     private EntityManager em;
 
     public List<BatchAuction> loadAll() {
-        return em.createNamedQuery("BatchAuction.findAll").getResultList();
+        List<BatchAuction> batchAuctions = em.createNamedQuery("BatchAuction.findAll").getResultList();
+
+        // Bad solution to force loading of bids and products
+        batchAuctions.stream().forEach(a -> {
+            a.getBatchProductList().size();
+            a.getUserBatchBidList().size();
+        });
+        return batchAuctions;
     }
 
     public void save(BatchAuction domain) {
@@ -29,7 +36,7 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO , Serializable{
     }
 
     public void delete(BatchAuction domain) {
-        BatchAuction batchAuc = em.find(BatchAuction.class , domain.getId());
+        BatchAuction batchAuc = em.find(BatchAuction.class, domain.getId());
         em.remove(batchAuc);
     }
 

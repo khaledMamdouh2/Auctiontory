@@ -58,8 +58,14 @@ public class BatchAuction implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "batchAuction")
     private List<UserBatchBid> userBatchBidList;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User ownerId;
+
+    @Transient
+    private Integer highestBid;
+
+    @Transient
+    private User highestBidderId;
 
     public BatchAuction() {
     }
@@ -150,6 +156,22 @@ public class BatchAuction implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public Integer getHighestBid() {
+        return highestBid;
+    }
+
+    public void setHighestBid(Integer highestBid) {
+        this.highestBid = highestBid;
+    }
+
+    public User getHighestBidderId() {
+        return highestBidderId;
+    }
+
+    public void setHighestBidderId(User highestBidderId) {
+        this.highestBidderId = highestBidderId;
     }
 
     @Override

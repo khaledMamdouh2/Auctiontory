@@ -2,6 +2,8 @@ package com.auctiontory.view.bean;
 
 import com.auctiontory.controller.BatchAuctionController;
 import com.auctiontory.model.entity.BatchAuction;
+import com.auctiontory.model.entity.User;
+import com.auctiontory.model.entity.UserBatchBid;
 import org.omnifaces.cdi.Push;
 import org.omnifaces.cdi.PushContext;
 
@@ -25,8 +27,24 @@ public class ViewBatchAuctionBean {
     private ArrayList<BatchAuction> batchAuctions;
 
     @PostConstruct
-    public void initAuctions() {
+    public void fillAuctions() {
         batchAuctions = (ArrayList<BatchAuction>) batchControllerImpl.loadAll();
+        batchAuctions.forEach(auction -> {
+            Integer highestBid = 0;
+            User highestBidderId = null;
+            for (UserBatchBid userBatchBid : auction.getUserBatchBidList()) {
+                if (userBatchBid.getPrice() > highestBid) {
+                    highestBid = userBatchBid.getPrice();
+                    highestBidderId = userBatchBid.getUser();
+                }
+            }
+            if (highestBidderId != null) {
+                auction.setHighestBid(highestBid);
+                auction.setHighestBidderId(highestBidderId);
+            } else {
+
+            }
+        });
     }
 
     public ArrayList<BatchAuction> getBatchAuctions() {
@@ -38,7 +56,7 @@ public class ViewBatchAuctionBean {
     }
 
     public void notifyUpdate() {
-        batchAuctions = (ArrayList<BatchAuction>) batchControllerImpl.loadAll();
+        fillAuctions();
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         for (BatchAuction batchAuction : batchAuctions) {
             jsonArrayBuilder.add(batchAuction.toString());
