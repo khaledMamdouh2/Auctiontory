@@ -65,8 +65,7 @@ public class AddBatchAuctionBean {
     public void setProductAdded(BatchProduct productAdded) {
         this.productAdded = productAdded;
     }
-
-
+    
     public UserBean getUserBean() {
         return userBean;
     }
