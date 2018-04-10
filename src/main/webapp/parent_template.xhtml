@@ -50,7 +50,7 @@
 <h:body>
     <div id="navbar-full">
         <div id="navbar">
-            <nav class="navbar navbar-ct-blue navbar-fixed-top navbar-transparent" role="navigation">
+            <nav class="navbar navbar-ct-blue navbar-fixed-top" role="navigation">
                 <div class="alert alert-success hidden">
                     <div class="container">
                         <b>Lorem ipsum</b> dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
@@ -100,9 +100,8 @@
                 </div><!-- /.container-fluid -->
 
             </nav>
-            <div class="blurred-container">
-                <div class="img-src" style="background-image: url('assets/img/bg.jpg')"></div>
-            </div>
+
+            <ui:insert name="titlePicture"/>
         </div><!--  end navbar -->
 
     </div> <!-- end menu-dropdown -->
@@ -129,6 +128,7 @@
                                          styleClass="form-control" id="usernameReg">
                                 <f:validateRequired/>
                                 <f:validateLength minimum="5" maximum="30"/>
+                                <f:validator validatorId="userNameValidator"/>
                             </h:inputText>
                             <h:message for="usernameReg" styleClass="label label-danger"/>
                             <br/>
@@ -146,6 +146,7 @@
                                          styleClass="form-control" id="emailReg">
                                 <f:validateRequired/>
                                 <f:validateLength minimum="5" maximum="40"/>
+                                <f:validator validatorId="emailValidator"/>
                             </h:inputText>
                             <h:message for="emailReg" styleClass="label label-danger"/>
                             <br/>

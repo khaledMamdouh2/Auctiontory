@@ -9,7 +9,12 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <ui:composition template="parent_template.xhtml">
     <ui:define name="title">
-        Home Page
+        Home
+    </ui:define>
+    <ui:define name="titlePicture">
+        <div class="blurred-container">
+            <div class="img-src" style="background-image: url('assets/img/bg.jpg')"></div>
+        </div>
     </ui:define>
     <ui:define name="main">
 
@@ -37,7 +42,6 @@
                 </script>
                 <div class="row" id="auctions">
                     <jsp:forEach items="#{viewBatchAuctionBean.batchAuctions}" var="auction">
-                        <!--This div will hold auction and will be repeated-->
                         <div class="col-sm-3" style="margin-bottom: 40px" id="auctiontory#{auction.id}">
                             <center>
                                 <h:form>
@@ -78,25 +82,6 @@
                         </div>
                     </jsp:forEach>
 
-                </div>
-                <div class="container pagination-sm" id="paginationDiv">
-                    <ul class="pagination ct-blue">
-
-                        <li><a href="#">&laquo;</a></li>
-
-                        <li><a href="#">1</a></li>
-
-                        <li><a href="#">2</a></li>
-
-                        <li class="active"><a href="#">3</a></li>
-
-                        <li><a href="#">4</a></li>
-
-                        <li><a href="#">5</a></li>
-
-                        <li><a href="#">&raquo;</a></li>
-
-                    </ul>
                 </div>
             </div>
             <!-- end container -->

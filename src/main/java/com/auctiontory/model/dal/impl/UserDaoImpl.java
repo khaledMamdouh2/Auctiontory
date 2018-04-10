@@ -50,6 +50,27 @@ public class UserDaoImpl implements UserDAO, Serializable {
         return isUser;
     }
 
+    @Override
+    public boolean emailUsed(String email) {
+        boolean isEmailTaken = false;
+
+        List<User> users = em.createNamedQuery("User.findByEmail")
+                .setParameter("email", email)
+                .getResultList();
+        if (users != null && users.size() > 0) {
+            User user = users.get(0);
+            if (user != null) {
+                isEmailTaken = true;
+            } else {
+                isEmailTaken = false;
+            }
+        } else {
+            isEmailTaken = false;
+        }
+
+        return isEmailTaken;
+    }
+
     public List<User> loadAll() {
         return em.createNamedQuery("User.findAll").getResultList();
     }

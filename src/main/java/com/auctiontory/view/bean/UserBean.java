@@ -4,6 +4,12 @@ import com.auctiontory.controller.UserController;
 import com.auctiontory.model.entity.User;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.FacesException;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -94,5 +100,6 @@ public class UserBean implements Serializable {
     public void setIncorrectLogin(boolean incorrectLogin) {
         this.incorrectLogin = incorrectLogin;
     }
+
 
 }
