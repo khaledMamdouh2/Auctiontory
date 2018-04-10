@@ -75,7 +75,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <p class="text-muted">
-                                            <di>Highest: $#{auction.highestBid}</span>
+                                            Highest: $#{auction.highestBid}
                                             <h:panelGroup
                                                     rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}">by #{auction.highestBidderId.userName} </h:panelGroup>
                                         </p>
