@@ -32,17 +32,17 @@ public class ViewBatchAuctionBean {
         batchAuctions.forEach(auction -> {
             Integer highestBid = 0;
             User highestBidderId = null;
-            for (UserBatchBid userBatchBid : auction.getUserBatchBidList()) {
-                if (userBatchBid.getPrice() > highestBid) {
-                    highestBid = userBatchBid.getPrice();
-                    highestBidderId = userBatchBid.getUser();
+            if (auction.getUserBatchBidList() != null) {
+                for (UserBatchBid userBatchBid : auction.getUserBatchBidList()) {
+                    if (userBatchBid.getPrice() > highestBid) {
+                        highestBid = userBatchBid.getPrice();
+                        highestBidderId = userBatchBid.getUser();
+                    }
                 }
             }
             if (highestBidderId != null) {
                 auction.setHighestBid(highestBid);
                 auction.setHighestBidderId(highestBidderId);
-            } else {
-
             }
         });
     }

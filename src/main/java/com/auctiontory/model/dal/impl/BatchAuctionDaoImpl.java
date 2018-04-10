@@ -20,10 +20,12 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
         List<BatchAuction> batchAuctions = em.createNamedQuery("BatchAuction.findAll").getResultList();
 
         // Bad solution to force loading of bids and products
-        batchAuctions.stream().forEach(a -> {
-            a.getBatchProductList().size();
-            a.getUserBatchBidList().size();
-        });
+        for (BatchAuction a : batchAuctions) {
+            if (a.getBatchProductList() != null)
+                a.getBatchProductList().size();
+            if (a.getUserBatchBidList() != null)
+                a.getUserBatchBidList().size();
+        }
         return batchAuctions;
     }
 
