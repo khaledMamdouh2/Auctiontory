@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h:head>
+
+</h:head>
+<h:body>
+    <f:view>
+        <h1>Selected Batch</h1>
+        <h:form>
+            <h:outputLabel>Title</h:outputLabel>
+            <h:inputText id="title" value="${viewBatch.batchAuction.title}" disabled="true"/>
+            <br></br>
+            <h:outputLabel>Batch Owner</h:outputLabel>
+            <h:inputText id="ownerId" value="${viewBatch.batchAuction.ownerId.userName}" disabled="true"/>
+            <br></br>
+            <h:outputLabel>DeadLine of the Auction</h:outputLabel>
+            <h:inputText id="deadLine" value="${viewBatch.batchAuction.deadline}" disabled="true"/>
+            <br></br>
+
+            <h:outputLabel>minimum Bid</h:outputLabel>
+            <h:inputText id="min" value="${viewBatch.batchAuction.minBid}" disabled="true"/>
+            <br></br>
+            <h3>product of this Batch</h3>
+            <br></br>
+            <ui:repeat value="${viewBatch.batchAuction.batchProductList}" var="products">
+                <h:outputLabel>Name</h:outputLabel>
+                <h:inputText id="pName" value="#{products.name}" disabled="true"/>
+                <br></br>
+                <h:outputLabel>Description</h:outputLabel>
+                <h:inputText id="pDescription" value="#{products.description}" disabled="true"/>
+                <br></br>
+            </ui:repeat>
+            <br></br>
+            <h3>User Bidding</h3>
+            <ui:repeat value="${viewBatch.batchAuction.userBatchBidList}" var="bidUsers">
+                <h:outputLabel>User Name</h:outputLabel>
+                <h:inputText id="user" value="#{bidUsers.user.userName}" disabled="true"/>
+                <br></br>
+                <h:outputLabel>User Bid</h:outputLabel>
+                <h:inputText id="userBidPrice" value="#{bidUsers.price}" disabled="true"/>
+                <br></br>
+            </ui:repeat>
+            <br></br>
+            <h3>Highest Bid</h3>
+            <h:outputLabel>Highest Bid</h:outputLabel>
+            <h:inputText id="highestBid" value="${viewBatch.batchAuction.highestBid}" disabled="true"/>
+            <br></br>
+            <h:outputLabel>Highest bidder Name</h:outputLabel>
+            <h:inputText id="highestBidder" value="${viewBatch.batchAuction.highestBidderId.userName}" disabled="true"/>
+            <c:choose>
+                <c:when test="#{viewBatch.joined==false}">
+                    <h:commandButton value="join" action="${viewBatch.joinAuction}"></h:commandButton>
+                </c:when>
+                <c:otherwise>
+                    <h:outputLabel>Bidding Price</h:outputLabel>
+                    <h:inputText id="price" binding="#{input1}" converter="javax.faces.Integer">
+                    </h:inputText>
+                    <!--action="${viewBatch.auctionBid(input1.value)}"-->
+                    <h:commandButton value="Bid" >
+                        <f:ajax execute="price" listener="${viewBatch.auctionBid(input1.value)}" render="renderOut"></f:ajax>
+                    </h:commandButton>
+                    <h:outputText id="renderOut"></h:outputText>
+                </c:otherwise>
+            </c:choose>
+
+
+        </h:form>
+    </f:view>
+</h:body>
+
+</html>
