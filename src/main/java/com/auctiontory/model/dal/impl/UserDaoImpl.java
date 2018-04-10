@@ -3,6 +3,7 @@ package com.auctiontory.model.dal.impl;
 import com.auctiontory.model.dal.UserDAO;
 import com.auctiontory.model.entity.User;
 
+import javax.ejb.Stateful;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -10,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.List;
 
-@Dependent
+@Stateful
 @Named("userDao")
 public class UserDaoImpl implements UserDAO, Serializable {
 
