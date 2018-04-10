@@ -1,6 +1,7 @@
 package com.auctiontory.controller.impl;
 
 import com.auctiontory.controller.BatchBidController;
+import com.auctiontory.controller.listener.BatchAuctionListener;
 import com.auctiontory.model.dal.BatchBidDAO;
 import com.auctiontory.model.entity.UserBatchBid;
 
@@ -14,6 +15,9 @@ public class BatchBidControllerImpl implements BatchBidController {
     @Inject
     private BatchBidDAO batchBidDao;
 
+    @Inject
+    BatchAuctionListener batchAuctionListener;
+
     @Override
     public boolean alreadyBid(int userId, int batchAuctionId) {
         return batchBidDao.alreadyBid(userId, batchAuctionId);
@@ -21,7 +25,9 @@ public class BatchBidControllerImpl implements BatchBidController {
 
     @Override
     public boolean bid(int userId, int batchAuctionId, int bidAmount) {
-        return batchBidDao.bid(userId, batchAuctionId, bidAmount);
+        boolean bid = batchBidDao.bid(userId, batchAuctionId, bidAmount);
+        batchAuctionListener.upadeView();
+        return bid;
     }
 
     @Override
