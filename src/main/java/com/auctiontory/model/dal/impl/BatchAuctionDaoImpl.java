@@ -64,6 +64,11 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
     public BatchAuction get(Serializable id) {
         BatchAuction batchAuction = em.find(BatchAuction.class, id);
 
+        if (batchAuction.getBatchProductList() != null)
+            batchAuction.getBatchProductList().size();
+        if (batchAuction.getUserBatchBidList() != null)
+            batchAuction.getUserBatchBidList().size();
+
         Integer highestBid = 0;
         User highestBidderId = null;
         if (batchAuction.getUserBatchBidList() != null) {

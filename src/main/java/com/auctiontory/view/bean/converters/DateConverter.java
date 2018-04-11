@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 public class DateConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent uiComponent, String s) {
-        System.out.println(s);
         Date date = null;
         if(s.trim().matches("^([1-9]|([012][0-9])|(3[01]))/([0]{0,1}[1-9]|1[012])/\\d\\d\\d\\d [012]{0,1}[0-9]:[0-6][0-9]$")){
             DateFormat formatter;

@@ -16,7 +16,7 @@ import java.util.List;
 
 @ManagedBean(name = "viewBatch")
 @SessionScoped
-public class viewBatchBean {
+public class ViewBatchBean {
 
     @Inject
     private BatchAuctionController batchController;
@@ -29,6 +29,9 @@ public class viewBatchBean {
     @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
 
+    public void initJoined() {
+        joined = batchBidController.alreadyBid(userBean.getUser().getId(), batchAuction.getId());
+    }
 
     private boolean joined = false;
 
@@ -50,8 +53,6 @@ public class viewBatchBean {
     }
 
     public BatchAuction getBatchAuction() {
-
-        batchAuction = batchController.loadAll().get(0);
         return batchAuction;
     }
 
@@ -91,25 +92,24 @@ public class viewBatchBean {
         this.price = price;
     }
 
-    public void joinAuction(){
-        if(batchBidController.alreadyBid(userBean.getUser().getId(),batchAuction.getId()))
-        {
+    public void joinAuction() {
+        if (!batchBidController.alreadyBid(userBean.getUser().getId(), batchAuction.getId())) {
             setJoined(true);
         }
 
     }
 
-    public void auctionBid(){
+    public void auctionBid() {
         int userId = userBean.getUser().getId();
         int batchAuctionId = batchAuction.getId();
         boolean correctBid = false;
         try {
-            correctBid = batchBidController.bid(userId, batchAuctionId,price);
+            correctBid = batchBidController.bid(userId, batchAuctionId, price);
         } catch (AuctionAlreadyClosedException e) {
             e.printStackTrace();
         }
-        if(!correctBid){
-           setBidSuccess("wrong Bid");
+        if (!correctBid) {
+            setBidSuccess("wrong Bid");
         }
     }
 }

@@ -20,12 +20,12 @@
 
         <div class="main">
             <div class="container text-center">
-                <h:form>
+                <h:form rendered="false">
                     <h:commandButton action="#{viewBatchAuctionBean.notifyUpdate}" value="testSockets">
                         <f:ajax/>
                     </h:commandButton>
                 </h:form>
-                <h:form>
+                <h:form rendered="false">
                     <h:commandButton action="#{viewBatchAuctionBean.testBid}" value="Bid">
                         <f:ajax/>
                     </h:commandButton>
@@ -59,10 +59,10 @@
                             else {
                                 bidArea = $("#" + id).find(".bidArea");
                                 bidArea[0].innerHTML = ` <p class="text-muted">
-                                                <span class="highestBid">Highest: $`+auction.highestBid+` </span>
+                                                <span class="highestBid">Highest: $` + auction.highestBid + ` </span>
                                                 <h:panelGroup
                                                         rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}"
-                                                        styleClass="highestBidder">by `+auction.highestBidderId.userName+` </h:panelGroup>
+                                                        styleClass="highestBidder">by ` + auction.highestBidderId.userName + ` </h:panelGroup>
                                             </p>`;
 
                             }
@@ -75,17 +75,14 @@
                         <div class="col-sm-3" style="margin-bottom: 40px" id="auctiontory#{auction.id}">
                             <center>
                                 <h:form>
-                                    <h:commandLink action="#{auctionBean.DoStuff}">
                                         <img src="assets/img/mockup.png" alt="#{auction.title}" class="img-rounded"
                                              style="width: 250px"/>
-                                    </h:commandLink>
                                 </h:form>
                                 <div style="overflow-wrap: break-word">
                                     <h4>
                                         #{auction.title}
                                         <h:panelGroup
                                                 rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}">by #{auction.ownerId.userName}</h:panelGroup>
-                                        <!--<label class="label label-info">Active</label>-->
                                     </h4>
                                 </div>
                                 <h5 class="bidsCount">Bids: #{auction.userBatchBidList.size()}</h5>
@@ -107,9 +104,13 @@
                                     </c:choose>
                                 </div>
                                 <h5>
-                                    Ends at: #{auction.deadline}
+                                    Ends at: <h:outputText value="#{auction.deadline}" converter="dateConvert"/>
                                 </h5>
-                                <button class="btn btn-info btn-block btn-fill">Go to Details</button>
+                                <h:form>
+                                    <h:commandButton styleClass="btn btn-info btn-block btn-fill" value="Go to Details"
+                                                     action="#{viewBatchAuctionBean.visitAuctionDetails(auction.id)}"
+                                    />
+                                </h:form>
                             </center>
                         </div>
                     </jsp:forEach>
