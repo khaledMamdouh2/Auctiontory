@@ -32,6 +32,10 @@ public class viewBatchBean {
 
     private boolean joined = false;
 
+    private String bidSuccess;
+
+    private int price;
+
 
     public void setBatchController(BatchAuctionController batchController) {
         this.batchController = batchController;
@@ -71,6 +75,22 @@ public class viewBatchBean {
         this.joined = joined;
     }
 
+    public String getBidSuccess() {
+        return bidSuccess;
+    }
+
+    public void setBidSuccess(String bidSuccess) {
+        this.bidSuccess = bidSuccess;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public void joinAuction(){
         if(batchBidController.alreadyBid(userBean.getUser().getId(),batchAuction.getId()))
         {
@@ -79,7 +99,7 @@ public class viewBatchBean {
 
     }
 
-    public String auctionBid(int price){
+    public void auctionBid(){
         int userId = userBean.getUser().getId();
         int batchAuctionId = batchAuction.getId();
         boolean correctBid = false;
@@ -89,9 +109,7 @@ public class viewBatchBean {
             e.printStackTrace();
         }
         if(!correctBid){
-           return "wrong amount";
-        }else{
-            return "bid correct";
+           setBidSuccess("wrong Bid");
         }
     }
 }
