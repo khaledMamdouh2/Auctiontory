@@ -20,18 +20,22 @@ public class DateConverter implements Converter {
         System.out.println(s);
         Date date = null;
         if(s.trim().matches("^([1-9]|([012][0-9])|(3[01]))/([0]{0,1}[1-9]|1[012])/\\d\\d\\d\\d [012]{0,1}[0-9]:[0-6][0-9]$")){
-            System.out.println("mazboot");
             DateFormat formatter;
             formatter = new SimpleDateFormat("dd/MM/yyyy H:m");
             try {
                 date = formatter.parse(s);
-                return date;
+                if(date.before(new Date())){
+                    FacesMessage msg = new FacesMessage("invalid date can't be in the past");
+                    msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+                    throw new ConverterException(msg);
+                }
+                else
+                    return date;
             } catch (ParseException ex) {
                 Logger.getLogger(DateConverter.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        else{
-            System.out.println("la2 m4 mzboot");
+        else {
             FacesMessage msg = new FacesMessage("invalid date format");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             throw new ConverterException(msg);

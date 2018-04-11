@@ -33,15 +33,15 @@
         </script>
     </ui:define>
     <ui:define name="main">
-        <div class="container" style="margin-top: 100px;">
+        <!--<div class="container" style="margin-top: 100px;">
             <label class="text-center">Select auction type:</label>
             <select class="form-control" id="typeAuc" onchange="changeAuction(value)">
                 <option value="batch">Batch Auction</option>
                 <option value="parts">Parts Auction</option>
             </select>
-        </div>
+        </div>-->
 
-        <div class="container">
+        <div class="container" style= "margin-top: 100px;">
             <div id="batch">
                 <h1>Add Batch Auction
                     <button href="#" class="btn btn-round btn-default" data-toggle="modal"
@@ -95,17 +95,18 @@
 
                 <!-- end add butch proudect-->
                 <h:form>
-                    <h:outputLabel value="#{addBatchBean.msg}" styleClass="text-success"/> <br/>
-                    <h:outputLabel value="#{addBatchBean.errMsg}" styleClass="text-danger"/><br/>
+                    <h:outputLabel value="#{addBatchBean.msg}" styleClass="text-success" /> <br/>
+                    <h:outputLabel value="#{addBatchBean.errMsg}" class="text-danger"/><br/>
                     <h:outputLabel value="Auction Title"/>
                     <br/>
                     <h:inputText id="auction_title" value="#{addBatchBean.auctionAdded.title}"
-                                 class="form-control"/>
+                                 class="form-control" required="true"/>
                     <br/>
                     <h:outputLabel value="deadline"/>
-                    <h:message for="auction_deadline" styleClass="txt-danger"/>
+
+                    <h:outputLabel styleClass="text-danger"><h:message for="auction_deadline" /></h:outputLabel>
                     <h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}" class="form-control"
-                                 pt:placeholder="dd/MM/yyyy H:m   for example: 20/3/2018 12:30">
+                                 pt:placeholder="dd/MM/yyyy H:m   for example: 20/3/2018 12:30" required="true">
                         <f:converter converterId="dateConvert"/>
                     </h:inputText>
 
@@ -113,7 +114,7 @@
 
                     <h:outputLabel value="Min Bid"/>
                     <br/>
-                    <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}" class="form-control"/>
+                    <h:inputText id="min_bid" value="#{addBatchBean.auctionAdded.minBid}" class="form-control" required="true"/>
                     <br/>
                     <h:commandButton value="Publish" action="#{addBatchBean.saveAuction()}"
                                      styleClass="btn btn-success"/>
