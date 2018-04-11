@@ -52,9 +52,20 @@
                             bidsCount = $("#" + id).find(".bidsCount");
                             bidsCount[0].innerHTML = 'Bids: ' + auction.numberOfBids;
 
-                            highestBid = $("#" + id).find(".highestBid");
-                            highestBid[0].innerHTML = 'Highest:'+ $#{auction.highestBid};
+                            if (auction.highestBidderId == null) {
+                                bidArea = $("#" + id).find(".bidArea");
+                                bidArea[0].innerHTML = `<label class="label label-fill label-warning">No Bids Yet</label>`;
+                            }
+                            else {
+                                bidArea = $("#" + id).find(".bidArea");
+                                bidArea[0].innerHTML = ` <p class="text-muted">
+                                                <span class="highestBid">Highest: $`+auction.highestBid+` </span>
+                                                <h:panelGroup
+                                                        rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}"
+                                                        styleClass="highestBidder">by `+auction.highestBidderId.userName+` </h:panelGroup>
+                                            </p>`;
 
+                            }
 
                         }
                     }
@@ -80,18 +91,21 @@
                                 <h5 class="bidsCount">Bids: #{auction.userBatchBidList.size()}</h5>
 
                                 <hr/>
-                                <c:choose>
-                                    <c:when test="#{auction.highestBidderId == null}">
-                                        <label class="label label-fill label-warning">No Bids Yet</label>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <p class="text-muted">
-                                            Highest: $#{auction.highestBid}
-                                            <h:panelGroup
-                                                    rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}">by #{auction.highestBidderId.userName} </h:panelGroup>
-                                        </p>
-                                    </c:otherwise>
-                                </c:choose>
+                                <div class="bidArea">
+                                    <c:choose>
+                                        <c:when test="#{auction.highestBidderId == null}">
+                                            <label class="label label-fill label-warning">No Bids Yet</label>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <p class="text-muted">
+                                                <span class="highestBid">Highest: $#{auction.highestBid} </span>
+                                                <h:panelGroup
+                                                        rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}"
+                                                        styleClass="highestBidder">by #{auction.highestBidderId.userName} </h:panelGroup>
+                                            </p>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
                                 <h5>
                                     Ends at: #{auction.deadline}
                                 </h5>
