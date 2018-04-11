@@ -62,6 +62,9 @@ public class AddBatchAuctionBean {
                 productAdded = new BatchProduct();
                 auctionProducts = new ArrayList<>();
             }
+            else {
+                return "home";
+            }
         }
         else{
             errMsg = "sorry, you must add product at least to the auction";
