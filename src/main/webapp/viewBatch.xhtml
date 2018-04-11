@@ -14,34 +14,68 @@
     <div class="container" style="margin-top: 3%;">
         <f:view>
             <h1><b>${viewBatch.batchAuction.title}</b></h1>
-            <p> <i class="fa fa-user"/> ${viewBatch.batchAuction.ownerId.userName}</p>
+            <p class="subtitle"> <i class="fa fa-user"/> ${viewBatch.batchAuction.ownerId.userName}</p>
             <p> <b>last Bid Time:</b> ${viewBatch.batchAuction.deadline} </p>
             <p>Minimum Bid : ${viewBatch.batchAuction.highestBid}</p>
-            <div>
+
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <h3>product of this Batch</h3>
+                    <div id="acordeon">
+                        <div class="panel-group" id="accordion">
+                            <ui:repeat value="${viewBatch.batchAuction.batchProductList}" var="products">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <!--data-target="#collapseOne"  data-toggle="gsdk-collapse"-->
+
+                                            <a data-target="#description#{products.id}" href="#description#{products.id}"  data-toggle="gsdk-collapse" class="state-open">
+                                                #{products.name}
+                                            </a></h4>
+                                    </div>
+                                    <div id="description#{products.id}" class="panel-collapse collapse gsdk-collapse">
+                                        <div class="panel-body">
+                                            #{products.description}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ui:repeat>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <h3>User Bidding</h3>
+                    <div class="table tab">
+                        <table class="table table-responsive    ">
+                            <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Bidding price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <ui:repeat value="${viewBatch.batchAuction.userBatchBidList}" var="bidUsers">
+                                <tr>
+                                    <td>#{bidUsers.user.userName}</td>
+                                    <td>#{bidUsers.price}</td>
+                                </tr>
+                            </ui:repeat>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
 
             </div>
 
+
+
+
             <h:form>
-                <h3>product of this Batch</h3>
-                <br></br>
-                <ui:repeat value="${viewBatch.batchAuction.batchProductList}" var="products">
-                    <h:outputLabel>Name</h:outputLabel>
-                    <h:inputText id="pName" value="#{products.name}" disabled="true"/>
-                    <br></br>
-                    <h:outputLabel>Description</h:outputLabel>
-                    <h:inputText id="pDescription" value="#{products.description}" disabled="true"/>
-                    <br></br>
-                </ui:repeat>
-                <br></br>
-                <h3>User Bidding</h3>
-                <ui:repeat value="${viewBatch.batchAuction.userBatchBidList}" var="bidUsers">
-                    <h:outputLabel>User Name</h:outputLabel>
-                    <h:inputText id="user" value="#{bidUsers.user.userName}" disabled="true"/>
-                    <br></br>
-                    <h:outputLabel>User Bid</h:outputLabel>
-                    <h:inputText id="userBidPrice" value="#{bidUsers.price}" disabled="true"/>
-                    <br></br>
-                </ui:repeat>
                 <br></br>
                 <h3>Highest Bid</h3>
                 <h:outputLabel>Highest Bid</h:outputLabel>
@@ -51,17 +85,19 @@
                 <h:inputText id="highestBidder" value="${viewBatch.batchAuction.highestBidderId.userName}" disabled="true"/>
                 <c:choose>
                     <c:when test="#{viewBatch.joined==false}">
-                        <h:commandButton value="join" action="${viewBatch.joinAuction}"></h:commandButton>
+                        <h:commandButton value="join" action="#{viewBatch.joinAuction}"></h:commandButton>
                     </c:when>
                     <c:otherwise>
                         <h:outputLabel>Bidding Price</h:outputLabel>
-                        <h:inputText id="price" binding="#{input1}" converter="javax.faces.Integer">
+                        <h:inputText id="price" value="#{viewBatch.price}" converter="javax.faces.Integer">
                         </h:inputText>
                         <!--action="${viewBatch.auctionBid(input1.value)}"-->
-                        <h:commandButton value="Bid" >
-                            <f:ajax execute="price" listener="${viewBatch.auctionBid(input1.value)}" render="renderOut"></f:ajax>
+                        <h:commandButton value="Bid" action="#{viewBatch.auctionBid}">
+                            <f:ajax execute="price" render="renderOut"></f:ajax>
                         </h:commandButton>
-                        <h:outputText id="renderOut"></h:outputText>
+                        <h:outputText id="renderOut" rendered="#{viewBatch.bidSuccess}">
+                            #{viewBatch.message}
+                        </h:outputText>
                     </c:otherwise>
                 </c:choose>
 
