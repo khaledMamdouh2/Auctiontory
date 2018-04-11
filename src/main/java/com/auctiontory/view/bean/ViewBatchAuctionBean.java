@@ -2,6 +2,7 @@ package com.auctiontory.view.bean;
 
 import com.auctiontory.controller.BatchAuctionController;
 import com.auctiontory.controller.BatchBidController;
+import com.auctiontory.model.dal.exception.AuctionAlreadyClosedException;
 import com.auctiontory.model.entity.BatchAuction;
 import com.auctiontory.model.entity.User;
 import com.auctiontory.model.entity.UserBatchBid;
@@ -68,6 +69,10 @@ public class ViewBatchAuctionBean {
     }
 
     public void testBid() {
-        batchBidControllerImpl.bid(8, 2, 8000);
+        try {
+            batchBidControllerImpl.bid(8, 2, 8000);
+        } catch (AuctionAlreadyClosedException e) {
+            e.printStackTrace();
+        }
     }
 }

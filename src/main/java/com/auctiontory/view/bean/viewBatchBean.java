@@ -3,8 +3,10 @@ package com.auctiontory.view.bean;
 import com.auctiontory.controller.BatchAuctionController;
 import com.auctiontory.controller.BatchBidController;
 import com.auctiontory.controller.impl.BatchControllerImpl;
+import com.auctiontory.model.dal.exception.AuctionAlreadyClosedException;
 import com.auctiontory.model.entity.*;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -30,9 +32,6 @@ public class viewBatchBean {
 
     private boolean joined = false;
 
-    public viewBatchBean(){
-
-    }
 
     public void setBatchController(BatchAuctionController batchController) {
         this.batchController = batchController;
@@ -83,7 +82,12 @@ public class viewBatchBean {
     public String auctionBid(int price){
         int userId = userBean.getUser().getId();
         int batchAuctionId = batchAuction.getId();
-        boolean correctBid = batchBidController.bid(userId, batchAuctionId,price);
+        boolean correctBid = false;
+        try {
+            correctBid = batchBidController.bid(userId, batchAuctionId,price);
+        } catch (AuctionAlreadyClosedException e) {
+            e.printStackTrace();
+        }
         if(!correctBid){
            return "wrong amount";
         }else{

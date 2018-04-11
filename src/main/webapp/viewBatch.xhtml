@@ -6,72 +6,72 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-<h:head>
+<ui:composition template="parent_template.xhtml">
+    <ui:define name="title">
+        Batch details
+    </ui:define>
+    <ui:define name="main">
+    <div class="container" style="margin-top: 3%;">
+        <f:view>
+            <h1><b>${viewBatch.batchAuction.title}</b></h1>
+            <p> <i class="fa fa-user"/> ${viewBatch.batchAuction.ownerId.userName}</p>
+            <p> <b>last Bid Time:</b> ${viewBatch.batchAuction.deadline} </p>
+            <p>Minimum Bid : ${viewBatch.batchAuction.highestBid}</p>
+            <div>
 
-</h:head>
-<h:body>
-    <f:view>
-        <h1>Selected Batch</h1>
-        <h:form>
-            <h:outputLabel>Title</h:outputLabel>
-            <h:inputText id="title" value="${viewBatch.batchAuction.title}" disabled="true"/>
-            <br></br>
-            <h:outputLabel>Batch Owner</h:outputLabel>
-            <h:inputText id="ownerId" value="${viewBatch.batchAuction.ownerId.userName}" disabled="true"/>
-            <br></br>
-            <h:outputLabel>DeadLine of the Auction</h:outputLabel>
-            <h:inputText id="deadLine" value="${viewBatch.batchAuction.deadline}" disabled="true"/>
-            <br></br>
+            </div>
 
-            <h:outputLabel>minimum Bid</h:outputLabel>
-            <h:inputText id="min" value="${viewBatch.batchAuction.minBid}" disabled="true"/>
-            <br></br>
-            <h3>product of this Batch</h3>
-            <br></br>
-            <ui:repeat value="${viewBatch.batchAuction.batchProductList}" var="products">
-                <h:outputLabel>Name</h:outputLabel>
-                <h:inputText id="pName" value="#{products.name}" disabled="true"/>
+            <h:form>
+                <h3>product of this Batch</h3>
                 <br></br>
-                <h:outputLabel>Description</h:outputLabel>
-                <h:inputText id="pDescription" value="#{products.description}" disabled="true"/>
+                <ui:repeat value="${viewBatch.batchAuction.batchProductList}" var="products">
+                    <h:outputLabel>Name</h:outputLabel>
+                    <h:inputText id="pName" value="#{products.name}" disabled="true"/>
+                    <br></br>
+                    <h:outputLabel>Description</h:outputLabel>
+                    <h:inputText id="pDescription" value="#{products.description}" disabled="true"/>
+                    <br></br>
+                </ui:repeat>
                 <br></br>
-            </ui:repeat>
-            <br></br>
-            <h3>User Bidding</h3>
-            <ui:repeat value="${viewBatch.batchAuction.userBatchBidList}" var="bidUsers">
-                <h:outputLabel>User Name</h:outputLabel>
-                <h:inputText id="user" value="#{bidUsers.user.userName}" disabled="true"/>
+                <h3>User Bidding</h3>
+                <ui:repeat value="${viewBatch.batchAuction.userBatchBidList}" var="bidUsers">
+                    <h:outputLabel>User Name</h:outputLabel>
+                    <h:inputText id="user" value="#{bidUsers.user.userName}" disabled="true"/>
+                    <br></br>
+                    <h:outputLabel>User Bid</h:outputLabel>
+                    <h:inputText id="userBidPrice" value="#{bidUsers.price}" disabled="true"/>
+                    <br></br>
+                </ui:repeat>
                 <br></br>
-                <h:outputLabel>User Bid</h:outputLabel>
-                <h:inputText id="userBidPrice" value="#{bidUsers.price}" disabled="true"/>
+                <h3>Highest Bid</h3>
+                <h:outputLabel>Highest Bid</h:outputLabel>
+                <h:inputText id="highestBid" value="${viewBatch.batchAuction.highestBid}" disabled="true"/>
                 <br></br>
-            </ui:repeat>
-            <br></br>
-            <h3>Highest Bid</h3>
-            <h:outputLabel>Highest Bid</h:outputLabel>
-            <h:inputText id="highestBid" value="${viewBatch.batchAuction.highestBid}" disabled="true"/>
-            <br></br>
-            <h:outputLabel>Highest bidder Name</h:outputLabel>
-            <h:inputText id="highestBidder" value="${viewBatch.batchAuction.highestBidderId.userName}" disabled="true"/>
-            <c:choose>
-                <c:when test="#{viewBatch.joined==false}">
-                    <h:commandButton value="join" action="${viewBatch.joinAuction}"></h:commandButton>
-                </c:when>
-                <c:otherwise>
-                    <h:outputLabel>Bidding Price</h:outputLabel>
-                    <h:inputText id="price" binding="#{input1}" converter="javax.faces.Integer">
-                    </h:inputText>
-                    <!--action="${viewBatch.auctionBid(input1.value)}"-->
-                    <h:commandButton value="Bid" >
-                        <f:ajax execute="price" listener="${viewBatch.auctionBid(input1.value)}" render="renderOut"></f:ajax>
-                    </h:commandButton>
-                    <h:outputText id="renderOut"></h:outputText>
-                </c:otherwise>
-            </c:choose>
+                <h:outputLabel>Highest bidder Name</h:outputLabel>
+                <h:inputText id="highestBidder" value="${viewBatch.batchAuction.highestBidderId.userName}" disabled="true"/>
+                <c:choose>
+                    <c:when test="#{viewBatch.joined==false}">
+                        <h:commandButton value="join" action="${viewBatch.joinAuction}"></h:commandButton>
+                    </c:when>
+                    <c:otherwise>
+                        <h:outputLabel>Bidding Price</h:outputLabel>
+                        <h:inputText id="price" binding="#{input1}" converter="javax.faces.Integer">
+                        </h:inputText>
+                        <!--action="${viewBatch.auctionBid(input1.value)}"-->
+                        <h:commandButton value="Bid" >
+                            <f:ajax execute="price" listener="${viewBatch.auctionBid(input1.value)}" render="renderOut"></f:ajax>
+                        </h:commandButton>
+                        <h:outputText id="renderOut"></h:outputText>
+                    </c:otherwise>
+                </c:choose>
 
 
-        </h:form>
-    </f:view>
-</h:body>
+            </h:form>
+        </f:view>
+
+    </div>
+    </ui:define>
+</ui:composition>
+
 
 </html>
