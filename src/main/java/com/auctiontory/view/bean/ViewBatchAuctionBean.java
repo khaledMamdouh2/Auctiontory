@@ -75,14 +75,6 @@ public class ViewBatchAuctionBean {
         this.viewBatchBean = viewBatchBean;
     }
 
-    public void testBid() {
-        try {
-            batchBidControllerImpl.bid(8, 2, 8000);
-        } catch (AuctionAlreadyClosedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public String visitAuctionDetails(Integer batchId) {
         BatchAuction batchAuction = batchControllerImpl.get(batchId);
         viewBatchBean.setBatchAuction(batchAuction);

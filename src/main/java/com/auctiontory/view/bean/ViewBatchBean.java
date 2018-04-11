@@ -3,6 +3,7 @@ package com.auctiontory.view.bean;
 import com.auctiontory.controller.BatchAuctionController;
 import com.auctiontory.controller.BatchBidController;
 import com.auctiontory.controller.impl.BatchControllerImpl;
+import com.auctiontory.model.dal.exception.AlreadyHighestBidderException;
 import com.auctiontory.model.dal.exception.AuctionAlreadyClosedException;
 import com.auctiontory.model.entity.*;
 
@@ -29,15 +30,13 @@ public class ViewBatchBean {
     @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
 
+    private boolean bidPast, bidTry;
+
+    private String message;
+
     public void initJoined() {
-        joined = batchBidController.alreadyBid(userBean.getUser().getId(), batchAuction.getId());
+        bidPast = batchBidController.alreadyBid(userBean.getUser().getId(), batchAuction.getId());
     }
-
-    private boolean joined = false;
-
-    private String bidSuccess;
-
-    private int price;
 
 
     public void setBatchController(BatchAuctionController batchController) {
@@ -68,48 +67,60 @@ public class ViewBatchBean {
         this.userBean = userBean;
     }
 
-    public boolean isJoined() {
-        return joined;
+    public boolean isBidPast() {
+        return bidPast;
     }
 
-    public void setJoined(boolean joined) {
-        this.joined = joined;
+    public void setBidPast(boolean bidPast) {
+        this.bidPast = bidPast;
     }
 
-    public String getBidSuccess() {
-        return bidSuccess;
+    public boolean isBidTry() {
+        return bidTry;
     }
 
-    public void setBidSuccess(String bidSuccess) {
-        this.bidSuccess = bidSuccess;
+    public void setBidTry(boolean bidTry) {
+        this.bidTry = bidTry;
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void joinAuction() {
-        if (!batchBidController.alreadyBid(userBean.getUser().getId(), batchAuction.getId())) {
-            setJoined(true);
+    public String getMessage() {
+        if (bidTry) {
+            bidTry = false;
+        } else {
+            setMessage("");
         }
-
+        return message;
     }
 
-    public void auctionBid() {
-        int userId = userBean.getUser().getId();
-        int batchAuctionId = batchAuction.getId();
-        boolean correctBid = false;
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String bid() {
+        int price;
+        if (batchAuction.getHighestBid() == 0) {
+            price = batchAuction.getMinBid();
+        } else {
+            price = batchAuction.getHighestBid() + 100;
+        }
         try {
-            correctBid = batchBidController.bid(userId, batchAuctionId, price);
+            bidTry = true;
+            boolean bid = batchBidController.bid(userBean.getUser().getId(), batchAuction.getId(), price);
+            if (bid) {
+                message = "Successfully Bid";
+            } else {
+                message = "Couldn't bid, probably this is not the highest price, please retry";
+            }
         } catch (AuctionAlreadyClosedException e) {
-            e.printStackTrace();
+            message = "Sorry Auction is already closed";
+        } catch (AlreadyHighestBidderException e) {
+            message = "You are already highest bidder";
         }
-        if (!correctBid) {
-            setBidSuccess("wrong Bid");
-        }
+        refreshAuction();
+        return "viewBatch";
+    }
+
+    public void refreshAuction() {
+        batchAuction = batchController.get(batchAuction.getId());
     }
 }

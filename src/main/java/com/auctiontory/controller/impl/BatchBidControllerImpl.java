@@ -3,6 +3,7 @@ package com.auctiontory.controller.impl;
 import com.auctiontory.controller.BatchBidController;
 import com.auctiontory.controller.listener.BatchAuctionListener;
 import com.auctiontory.model.dal.BatchBidDAO;
+import com.auctiontory.model.dal.exception.AlreadyHighestBidderException;
 import com.auctiontory.model.dal.exception.AuctionAlreadyClosedException;
 import com.auctiontory.model.entity.UserBatchBid;
 
@@ -25,7 +26,7 @@ public class BatchBidControllerImpl implements BatchBidController {
     }
 
     @Override
-    public boolean bid(int userId, int batchAuctionId, int bidAmount) throws AuctionAlreadyClosedException {
+    public boolean bid(int userId, int batchAuctionId, int bidAmount) throws AlreadyHighestBidderException,AuctionAlreadyClosedException {
         boolean bid = batchBidDao.bid(userId, batchAuctionId, bidAmount);
         batchAuctionListener.upadeView();
         return bid;

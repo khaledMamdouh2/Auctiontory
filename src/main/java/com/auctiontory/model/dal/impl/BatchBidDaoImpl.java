@@ -3,7 +3,9 @@ package com.auctiontory.model.dal.impl;
 import com.auctiontory.model.dal.BatchAuctionDAO;
 import com.auctiontory.model.dal.BatchBidDAO;
 import com.auctiontory.model.dal.UserDAO;
+import com.auctiontory.model.dal.exception.AlreadyHighestBidderException;
 import com.auctiontory.model.dal.exception.AuctionAlreadyClosedException;
+import com.auctiontory.model.dal.exception.BiddingException;
 import com.auctiontory.model.entity.BatchAuction;
 import com.auctiontory.model.entity.User;
 import com.auctiontory.model.entity.UserBatchBid;
@@ -48,12 +50,15 @@ public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
     }
 
     @Override
-    public boolean bid(int userId, int batchAuctionId, int bidAmount) throws AuctionAlreadyClosedException {
+    public boolean bid(int userId, int batchAuctionId, int bidAmount) throws AlreadyHighestBidderException, AuctionAlreadyClosedException {
         boolean bid = false;
         BatchAuction batchAuction = batchDao.get(batchAuctionId);
         User user = userDao.get(userId);
+        if (user.getUserName().equals(batchAuction.getHighestBidderId().getUserName())) {
+            throw new AlreadyHighestBidderException();
+        }
         if (batchAuction != null && user != null) {
-            if (bidAmount > batchAuction.getMinBid()) {
+            if (bidAmount >= batchAuction.getMinBid()) {
                 if (bidAmount > batchAuction.getHighestBid()) {
                     if (alreadyBid(userId, batchAuctionId)) {
                         UserBatchBidPK userBatchBidPK = new UserBatchBidPK(userId, batchAuctionId);

@@ -10,6 +10,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 @Dependent
@@ -41,9 +42,9 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
                 }
             }
             if (highestBidderId != null) {
-                auction.setHighestBid(highestBid);
                 auction.setHighestBidderId(highestBidderId);
             }
+            auction.setHighestBid(highestBid);
         });
         return batchAuctions;
     }
@@ -66,8 +67,10 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
 
         if (batchAuction.getBatchProductList() != null)
             batchAuction.getBatchProductList().size();
-        if (batchAuction.getUserBatchBidList() != null)
+        if (batchAuction.getUserBatchBidList() != null) {
             batchAuction.getUserBatchBidList().size();
+            Collections.sort(batchAuction.getUserBatchBidList());
+        }
 
         Integer highestBid = 0;
         User highestBidderId = null;
@@ -81,10 +84,9 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
             }
         }
         if (highestBidderId != null) {
-            batchAuction.setHighestBid(highestBid);
             batchAuction.setHighestBidderId(highestBidderId);
         }
-
+        batchAuction.setHighestBid(highestBid);
         return batchAuction;
     }
 
