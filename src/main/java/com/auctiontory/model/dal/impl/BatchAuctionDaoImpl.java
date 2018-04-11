@@ -32,6 +32,7 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
             Integer highestBid = 0;
             User highestBidderId = null;
             if (auction.getUserBatchBidList() != null) {
+                auction.setNumberOfBids(auction.getUserBatchBidList().size());
                 for (UserBatchBid userBatchBid : auction.getUserBatchBidList()) {
                     if (userBatchBid.getPrice() > highestBid) {
                         highestBid = userBatchBid.getPrice();
@@ -66,6 +67,7 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
         Integer highestBid = 0;
         User highestBidderId = null;
         if (batchAuction.getUserBatchBidList() != null) {
+            batchAuction.setNumberOfBids(batchAuction.getUserBatchBidList().size());
             for (UserBatchBid userBatchBid : batchAuction.getUserBatchBidList()) {
                 if (userBatchBid.getPrice() > highestBid) {
                     highestBid = userBatchBid.getPrice();
