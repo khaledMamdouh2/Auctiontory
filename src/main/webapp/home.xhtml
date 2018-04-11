@@ -47,8 +47,14 @@
                         auctions = JSON.parse(message);
                         console.log(auctions);
                         for (i = 0; i &lt; auctions.length; i++) {
-                            var id = 'auctiontory' + auctions[i].id;
-                            $("#" + id).find()
+                            var auction = auctions[i];
+                            var id = 'auctiontory' + auction.id;
+                            bidsCount = $("#" + id).find(".bidsCount");
+                            bidsCount[0].innerHTML = 'Bids: ' + auction.numberOfBids;
+
+                            highestBid = $("#" + id).find(".highestBid");
+                            highestBid[0].innerHTML = 'Highest:'+ $#{auction.highestBid};
+
 
                         }
                     }
@@ -67,11 +73,11 @@
                                     <h4>
                                         #{auction.title}
                                         <h:panelGroup
-                                                rendered="#{ (userBean.user.type != null) and (userBean.user.type eq ADMIN)}">by #{auction.ownerId.userName}</h:panelGroup>
+                                                rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}">by #{auction.ownerId.userName}</h:panelGroup>
                                         <!--<label class="label label-info">Active</label>-->
                                     </h4>
                                 </div>
-                                <h5>Bids: #{auction.userBatchBidList.size()}</h5>
+                                <h5 class="bidsCount">Bids: #{auction.userBatchBidList.size()}</h5>
 
                                 <hr/>
                                 <c:choose>
