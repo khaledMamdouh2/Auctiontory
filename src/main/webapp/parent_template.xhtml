@@ -29,25 +29,6 @@
     <link href='http://fonts.googleapis.com/css?family=Grand+Hotel' rel='stylesheet' type='text/css'/>
     <ui:insert name="customCss"/>
     <ui:insert name="customJs"/>
-
-    <style type="text/css">
-        #parts {
-            display: none;
-        }
-    </style>
-    <script type="text/javascript">
-        function changeAuction(value) {
-            if (value == "batch") {
-                document.getElementById("parts").style.display = "none";
-                document.getElementById("batch").style.display = "block";
-            }
-            else {
-                document.getElementById("batch").style.display = "none";
-                document.getElementById("parts").style.display = "block";
-            }
-        }
-
-    </script>
 </h:head>
 
 <h:body>
