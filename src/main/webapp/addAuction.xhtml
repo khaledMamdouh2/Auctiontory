@@ -78,9 +78,15 @@
                                  class="form-control"/>
                     <br/>
                     <h:outputLabel value="deadline"/>
-                    <h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}" class="form-control">
+                    <!--<h:inputText id="auction_deadline" value="#{addBatchBean.auctionAdded.deadline}" class="form-control">
                         <f:convertDateTime/>
-                    </h:inputText>
+                    </h:inputText>-->
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input class="form-control" />
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                    </div>
                     <br/>
 
                     <h:outputLabel value="Min Bid"/>
