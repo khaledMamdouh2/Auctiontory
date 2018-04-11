@@ -33,6 +33,7 @@ public class AddPartsAuctionBean {
 
     public String addProduct() {
         auctionProducts.add(productAdded);
+        productAdded = new PartsProduct();
         return "addAuction";
     }
 
