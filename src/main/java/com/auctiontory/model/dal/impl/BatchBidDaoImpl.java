@@ -54,8 +54,10 @@ public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
         boolean bid = false;
         BatchAuction batchAuction = batchDao.get(batchAuctionId);
         User user = userDao.get(userId);
-        if (user.getUserName().equals(batchAuction.getHighestBidderId().getUserName())) {
-            throw new AlreadyHighestBidderException();
+        if (batchAuction.getHighestBidderId() != null) {
+            if (user.getUserName().equals(batchAuction.getHighestBidderId().getUserName())) {
+                throw new AlreadyHighestBidderException();
+            }
         }
         if (batchAuction != null && user != null) {
             if (bidAmount >= batchAuction.getMinBid()) {

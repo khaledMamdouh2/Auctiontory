@@ -114,7 +114,7 @@
                                 <c:forEach items="#{viewBatch.batchAuction.userBatchBidList}" var="bid" varStatus="i">
                                     <tr>
                                         <td>
-                                            i
+                                            #{i.index+1}
                                         </td>
                                         <h:panelGroup rendered="#{userBean.user.type eq 'ADMIN'}">
                                             <td>
