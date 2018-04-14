@@ -48,7 +48,7 @@
                             data-target="#butchProudectModal"
                             style="color:#e5e5e5 ;background-color: #3a87ad ">add proudect
                     </button>
-                    <h5  class="text-success"><span id="productsNum">#{addBatchBean.productsNumber}</span> products added</h5>
+                    <h5  class="text-success">#{addBatchBean.productsNumber} products added</h5>
                 </h1>
 
                 <!-- add  batch proudect -->
@@ -79,9 +79,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <h:commandButton value="Add" styleClass="btn btn-success" action="#{addBatchBean.addProduct()}">
-                                            <f:ajax execute="pdesc pname" render="pnameErr pdescErr productsNum" />
-                                    </h:commandButton>
+                                    <h:commandButton value="Add" styleClass="btn btn-success" action="#{addBatchBean.addProduct()}"/>
+
                                 </div>
                             </h:form>
 
