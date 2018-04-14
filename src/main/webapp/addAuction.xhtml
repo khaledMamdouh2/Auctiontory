@@ -33,25 +33,25 @@
         </script>
     </ui:define>
     <ui:define name="main">
-        <!--<div class="container" style="margin-top: 100px;">
+        <div class="container" style="margin-top: 100px;">
             <label class="text-center">Select auction type:</label>
             <select class="form-control" id="typeAuc" onchange="changeAuction(value)">
                 <option value="batch">Batch Auction</option>
                 <option value="parts">Parts Auction</option>
             </select>
-        </div>-->
+        </div>
 
-        <div class="container" style= "margin-top: 100px;">
+        <div class="container" >
             <div id="batch">
                 <h1>Add Batch Auction
                     <button href="#" class="btn btn-round btn-default" data-toggle="modal"
                             data-target="#butchProudectModal"
                             style="color:#e5e5e5 ;background-color: #3a87ad ">add proudect
                     </button>
-                    <h5 class="text-success">#{addBatchBean.productsNumber} products added</h5>
+                    <h5  class="text-success"><span id="productsNum">#{addBatchBean.productsNumber}</span> products added</h5>
                 </h1>
 
-                <!-- add  butch proudect -->
+                <!-- add  batch proudect -->
 
                 <div class="modal fade" id="butchProudectModal" tabindex="-1" role="dialog"
                      aria-labelledby="loginModalLabel"
@@ -67,24 +67,21 @@
                                     <div class="form-group">
                                         <h6>Proudect Name</h6>
                                         <h:inputText value="#{addBatchBean.productAdded.name}" label="ProudectName"
-                                                     styleClass="form-control" id="pname">
-                                            <f:validateRequired/>
-                                        </h:inputText>
-                                        <h:message for="pname" styleClass="label label-danger"/>
+                                                     styleClass="form-control" id="pname" required="true" requiredMessage="required"/>
+                                        <h:message id="pnameErr" for="pname" styleClass="label label-danger"/>
                                         <br/>
                                         <h6>Product description</h6>
                                         <h:inputText value="#{addBatchBean.productAdded.description}"
                                                      label="ProudectDesc" required="true"
-                                                     styleClass="form-control" id="pdesc">
-                                            <f:validateRequired/>
-                                        </h:inputText>
-                                        <h:message for="pdesc" styleClass="label label-danger"/>
+                                                     styleClass="form-control" id="pdesc" requiredMessage="required" />
+                                        <h:message id="pdescErr" for="pdesc" styleClass="label label-danger"/>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <h:commandButton value="Add" styleClass="btn btn-success"
-                                                     action="#{addBatchBean.addProduct()}"/>
+                                    <h:commandButton value="Add" styleClass="btn btn-success" action="#{addBatchBean.addProduct()}">
+                                            <f:ajax execute="pdesc pname" render="pnameErr pdescErr productsNum" />
+                                    </h:commandButton>
                                 </div>
                             </h:form>
 
@@ -186,15 +183,17 @@
                 <br/>
 
                 <h:form prependId="false">
-                    <h:outputLabel value="#{addBatchBean.msg}" styleClass="text-success"/><br/>
-                    <h:outputLabel value="#{addBatchBean.errMsg}" styleClass="text-danger"/><br/>
+                    <h:outputLabel value="#{addPartsBean.msg}" styleClass="text-success"/><br/>
+                    <h:outputLabel value="#{addPartsBean.errMsg}" styleClass="text-danger"/><br/>
                     <h:outputLabel value="Auction Title"/>
                     <br/>
                     <h:inputText value="#{addPartsBean.auctionAdded.title}" class="form-control"/>
                     <br/>
                     <h:outputLabel value="deadline"/>
                     <br/>
-                    <h:inputText value="#{addPartsBean.auctionAdded.deadline}" class="form-control"/>
+                    <h:inputText value="#{addPartsBean.auctionAdded.deadline}" class="form-control" pt:placeholder="dd/MM/yyyy H:m   for example: 20/3/2018 12:30" required="true">
+                    <f:converter converterId="dateConvert"/>
+                    </h:inputText>
                     <br/>
                     <h:commandButton value="Publish" action="#{addPartsBean.saveAuction()}"
                                      styleClass="btn btn-success"/>

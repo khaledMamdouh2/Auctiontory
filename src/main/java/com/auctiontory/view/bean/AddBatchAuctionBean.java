@@ -37,7 +37,7 @@ public class AddBatchAuctionBean {
         auctionProducts.add(productAdded);
         productAdded = new BatchProduct();
         errMsg = null;
-        return "addAuction";
+        return null;
     }
 
     public String saveAuction() {

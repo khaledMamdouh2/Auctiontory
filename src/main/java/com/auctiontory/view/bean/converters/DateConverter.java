@@ -45,8 +45,8 @@ public class DateConverter implements Converter {
     @Override
     public String getAsString(FacesContext facesContext, UIComponent uiComponent, Object o) {
         Date date = (Date) o;
-        String year = Integer.toString(date.getYear()-100+2000);
-        String month = Integer.toString(date.getMonth());
+        String year = Integer.toString(date.getYear()+1900);
+        String month = Integer.toString(date.getMonth()+1);
         String day = Integer.toString(date.getDate());
         String hour = Integer.toString(date.getHours());
         String minutes = Integer.toString(date.getMinutes());
