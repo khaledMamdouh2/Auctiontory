@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Dependent
@@ -30,6 +31,7 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
                 a.getUserBatchBidList().size();
         }
         batchAuctions.forEach(auction -> {
+            auction.setActive(isActive(auction.getId()));
             Integer highestBid = 0;
             User highestBidderId = null;
             if (auction.getUserBatchBidList() != null) {
@@ -64,7 +66,7 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
 
     public BatchAuction get(Serializable id) {
         BatchAuction batchAuction = em.find(BatchAuction.class, id);
-
+        batchAuction.setActive(isActive((Integer) id));
         if (batchAuction.getBatchProductList() != null)
             batchAuction.getBatchProductList().size();
         if (batchAuction.getUserBatchBidList() != null) {
@@ -96,5 +98,16 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
 
     public EntityManager getEntityManager() {
         return em;
+    }
+
+    @Override
+    public boolean isActive(Integer id) {
+        boolean isActive = false;
+        Date nowDate = new Date();
+        Date auctionDate = null;
+        BatchAuction batchAuction = em.find(BatchAuction.class, id);
+        auctionDate = batchAuction.getDeadline();
+        isActive = nowDate.before(auctionDate);
+        return isActive;
     }
 }

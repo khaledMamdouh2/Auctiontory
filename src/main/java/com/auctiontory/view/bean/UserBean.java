@@ -72,7 +72,7 @@ public class UserBean implements Serializable {
 
     public String register() {
         userController.save(user);
-        user = null;
+        user = new User();
         registered = true;
         return null;
     }

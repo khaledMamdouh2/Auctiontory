@@ -31,6 +31,7 @@ public class BatchControllerImpl implements BatchAuctionController {
 
     public void update(BatchAuction domain) {
         batchDao.update(domain);
+        batchAuctionListener.upadeView();
     }
 
     public void delete(BatchAuction domain) {
@@ -43,4 +44,9 @@ public class BatchControllerImpl implements BatchAuctionController {
         return batchDao.get(id);
     }
 
+    @Override
+    public boolean isActive(Integer id) {
+        batchAuctionListener.upadeView();
+        return batchDao.isActive(id);
+    }
 }

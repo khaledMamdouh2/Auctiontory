@@ -1,5 +1,6 @@
 package com.auctiontory.model.dal.impl;
 
+import com.auctiontory.controller.listener.BatchAuctionListener;
 import com.auctiontory.model.dal.BatchAuctionDAO;
 import com.auctiontory.model.dal.BatchBidDAO;
 import com.auctiontory.model.dal.UserDAO;
@@ -22,6 +23,9 @@ import java.util.List;
 public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
     @PersistenceContext(unitName = "AuctionsPU")
     private EntityManager em;
+
+    @Inject
+    BatchAuctionListener batchAuctionListener;
 
     @Inject
     private BatchAuctionDAO batchDao;
@@ -52,32 +56,39 @@ public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
     @Override
     public boolean bid(int userId, int batchAuctionId, int bidAmount) throws AlreadyHighestBidderException, AuctionAlreadyClosedException {
         boolean bid = false;
-        BatchAuction batchAuction = batchDao.get(batchAuctionId);
-        User user = userDao.get(userId);
-        if (batchAuction.getHighestBidderId() != null) {
-            if (user.getUserName().equals(batchAuction.getHighestBidderId().getUserName())) {
-                throw new AlreadyHighestBidderException();
+        boolean isActive = batchDao.isActive(batchAuctionId);
+        if (isActive) {
+            BatchAuction batchAuction = batchDao.get(batchAuctionId);
+            User user = userDao.get(userId);
+            if (batchAuction.getHighestBidderId() != null) {
+                if (user.getUserName().equals(batchAuction.getHighestBidderId().getUserName())) {
+                    throw new AlreadyHighestBidderException();
+                }
             }
-        }
-        if (batchAuction != null && user != null) {
-            if (bidAmount >= batchAuction.getMinBid()) {
-                if (bidAmount > batchAuction.getHighestBid()) {
-                    if (alreadyBid(userId, batchAuctionId)) {
-                        UserBatchBidPK userBatchBidPK = new UserBatchBidPK(userId, batchAuctionId);
-                        UserBatchBid userBatchBid = get(userBatchBidPK);
-                        userBatchBid.setPrice(bidAmount);
-                        em.persist(userBatchBid);
-                        bid = true;
-                    } else {
-                        UserBatchBidPK userBatchBidPK = new UserBatchBidPK(userId, batchAuctionId);
-                        UserBatchBid userBatchBid = new UserBatchBid(userBatchBidPK);
-                        userBatchBid.setPrice(bidAmount);
-                        em.persist(userBatchBid);
-                        bid = true;
+            if (batchAuction != null && user != null) {
+                if (bidAmount >= batchAuction.getMinBid()) {
+                    if (bidAmount > batchAuction.getHighestBid()) {
+                        if (alreadyBid(userId, batchAuctionId)) {
+                            UserBatchBidPK userBatchBidPK = new UserBatchBidPK(userId, batchAuctionId);
+                            UserBatchBid userBatchBid = get(userBatchBidPK);
+                            userBatchBid.setPrice(bidAmount);
+                            em.persist(userBatchBid);
+                            bid = true;
+                        } else {
+                            UserBatchBidPK userBatchBidPK = new UserBatchBidPK(userId, batchAuctionId);
+                            UserBatchBid userBatchBid = new UserBatchBid(userBatchBidPK);
+                            userBatchBid.setPrice(bidAmount);
+                            em.persist(userBatchBid);
+                            bid = true;
+                        }
+                        batchAuctionListener.upadeView();
                     }
                 }
             }
+        } else {
+            throw new AuctionAlreadyClosedException();
         }
+
         return bid;
     }
 

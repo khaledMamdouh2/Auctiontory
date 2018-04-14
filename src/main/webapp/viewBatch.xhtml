@@ -106,7 +106,7 @@
                             <c:when test="#{viewBatch.batchAuction.userBatchBidList.size() eq 0}">
                                 <tr>
                                     <td colspan="3">
-                                        <center style="font-size: x-large;">No bids yet</center>
+                                        <center style="font-size: x-large;">No bids!</center>
                                     </td>
                                 </tr>
                             </c:when>
@@ -133,7 +133,14 @@
                 </div>
             </div>
             <h:panelGroup
-                    rendered="#{userBean.user.type !=null and userBean.user.type != 'ADMIN' and userBean.user.type != 'SUPPLIER' and userBean.user.userName != viewBatch.batchAuction.ownerId.userName}">
+                    rendered="#{
+                    userBean.user.type !=null
+                    and userBean.user.type != 'ADMIN'
+                    and userBean.user.type != 'SUPPLIER'
+                    and userBean.user.userName != viewBatch.batchAuction.ownerId.userName
+                    and
+                    viewBatch.batchAuction.active
+                    }">
                 <h:form>
                     <h:commandButton value="Bid" action="#{viewBatch.bid}" styleClass="btn btn-lg btn-info btn-fill"/>
                     <br/>

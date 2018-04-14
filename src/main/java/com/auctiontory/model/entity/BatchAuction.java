@@ -70,6 +70,9 @@ public class BatchAuction implements Serializable {
     @Transient
     private Integer numberOfBids;
 
+    @Transient
+    private boolean active;
+
     public BatchAuction() {
     }
 
@@ -185,6 +188,14 @@ public class BatchAuction implements Serializable {
         this.numberOfBids = numberOfBids;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     // Copy Constructor to use with JSON
     public BatchAuction(BatchAuction batchAuction) {
         this.id = batchAuction.id;
@@ -192,6 +203,7 @@ public class BatchAuction implements Serializable {
         this.deadline = batchAuction.deadline;
         this.minBid = batchAuction.minBid;
         this.highestBid = batchAuction.highestBid;
+        this.active = batchAuction.active;
         if (batchAuction.getHighestBidderId() != null) {
             this.highestBidderId = new User();
             this.highestBidderId.setId(batchAuction.getHighestBidderId().getId());

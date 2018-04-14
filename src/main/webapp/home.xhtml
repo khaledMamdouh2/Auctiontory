@@ -72,47 +72,62 @@
                 </script>
                 <div class="row" id="auctions">
                     <jsp:forEach items="#{viewBatchAuctionBean.batchAuctions}" var="auction">
-                        <div class="col-sm-3" style="margin-bottom: 40px" id="auctiontory#{auction.id}">
-                            <center>
-                                <h:form>
+                        <h:panelGroup
+                                rendered="#{
+                                    auction.active
+                                ||
+                                    ( (userBean.user.type != null) and (userBean.user.type eq 'ADMIN') )
+                                ||
+                                    ( (userBean.user.type != null) and (userBean.user.userName eq auction.ownerId.userName))
+                                ||
+                                    ( (userBean.user.type != null) and (userBean.user.userName eq auction.highestBidderId.userName))
+
+                                    }">
+                            <div class="col-sm-3" style="margin-bottom: 40px" id="auctiontory#{auction.id}">
+                                <center>
+                                    <h:form>
                                         <img src="assets/img/mockup.png" alt="#{auction.title}" class="img-rounded"
                                              style="width: 250px"/>
-                                </h:form>
-                                <div style="overflow-wrap: break-word">
-                                    <h4>
-                                        #{auction.title}
-                                        <h:panelGroup
-                                                rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}">by #{auction.ownerId.userName}</h:panelGroup>
-                                    </h4>
-                                </div>
-                                <h5 class="bidsCount">Bids: #{auction.userBatchBidList.size()}</h5>
-
-                                <hr/>
-                                <div class="bidArea">
-                                    <c:choose>
-                                        <c:when test="#{auction.highestBidderId == null}">
-                                            <label class="label label-fill label-warning">No Bids Yet</label>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <p class="text-muted">
-                                                <span class="highestBid">Highest: $#{auction.highestBid} </span>
-                                                <h:panelGroup
-                                                        rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}"
-                                                        styleClass="highestBidder">by #{auction.highestBidderId.userName} </h:panelGroup>
-                                            </p>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                                <h5>
-                                    Ends at: <h:outputText value="#{auction.deadline}" converter="dateConvert"/>
-                                </h5>
-                                <h:form>
-                                    <h:commandButton styleClass="btn btn-info btn-block btn-fill" value="Go to Details"
-                                                     action="#{viewBatchAuctionBean.visitAuctionDetails(auction.id)}"
-                                    />
-                                </h:form>
-                            </center>
-                        </div>
+                                    </h:form>
+                                    <div style="overflow-wrap: break-word">
+                                        <h4>
+                                            #{auction.title}
+                                            <h:panelGroup
+                                                    rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}">by #{auction.ownerId.userName}</h:panelGroup>
+                                            <h:panelGroup rendered="#{!auction.active}">
+                                                <label class="label label-fill label-danger">CLOSED!</label>
+                                            </h:panelGroup>
+                                        </h4>
+                                    </div>
+                                    <h5 class="bidsCount">Bids: #{auction.userBatchBidList.size()}</h5>
+                                    <hr/>
+                                    <div class="bidArea">
+                                        <c:choose>
+                                            <c:when test="#{auction.highestBidderId == null}">
+                                                <label class="label label-fill label-warning">No Bids!</label>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <p class="text-muted">
+                                                    <span class="highestBid">Highest: $#{auction.highestBid} </span>
+                                                    <h:panelGroup
+                                                            rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}"
+                                                            styleClass="highestBidder">by #{auction.highestBidderId.userName} </h:panelGroup>
+                                                </p>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <h5>
+                                        Ends at: <h:outputText value="#{auction.deadline}" converter="dateConvert"/>
+                                    </h5>
+                                    <h:form>
+                                        <h:commandButton styleClass="btn btn-info btn-block btn-fill"
+                                                         value="Go to Details"
+                                                         action="#{viewBatchAuctionBean.visitAuctionDetails(auction.id)}"
+                                        />
+                                    </h:form>
+                                </center>
+                            </div>
+                        </h:panelGroup>
                     </jsp:forEach>
 
                 </div>
