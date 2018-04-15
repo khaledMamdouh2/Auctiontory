@@ -44,7 +44,7 @@ public class PartsAuction implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "title")
     private String title;
-    @OneToMany(mappedBy = "auctionId")
+    @OneToMany(mappedBy = "auctionId" ,cascade=CascadeType.ALL)
     private List<PartsProduct> partsProductList;
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @ManyToOne

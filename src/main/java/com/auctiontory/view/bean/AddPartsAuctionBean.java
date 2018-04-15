@@ -21,6 +21,8 @@ public class AddPartsAuctionBean {
     private PartsAuctionController partsControllerImpl;
     @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
+    @ManagedProperty(value = "#{publicBean}")
+    private PublicBean publicBean;
     @Inject
     private UserController userControllerImpl;
 
@@ -28,20 +30,25 @@ public class AddPartsAuctionBean {
     private List<PartsProduct> auctionProducts = new ArrayList();
     private PartsProduct productAdded = new PartsProduct();
 
-    private String msg , errMsg;
+    private String msg , errMsg ;
     private int productsNumber;
 
     public String addProduct() {
         auctionProducts.add(productAdded);
         productAdded = new PartsProduct();
         errMsg = null;
+        publicBean.setUsedAuctionCurrently("parts");
         return "addAuction";
     }
 
 
     public String saveAuction() {
         if(auctionProducts.size()>0) {
-
+            boolean titleExisted = partsControllerImpl.isExist(auctionAdded.getTitle());
+            if(titleExisted){
+                errMsg = "sorry, this auction title is currently used";
+                return "addAuction";
+            }
             for(PartsProduct p : auctionProducts){
                 p.setAuctionId(auctionAdded);
             }
@@ -117,5 +124,13 @@ public class AddPartsAuctionBean {
 
     public void setProductsNumber(int productsNumber) {
         this.productsNumber = productsNumber;
+    }
+
+    public PublicBean getPublicBean() {
+        return publicBean;
+    }
+
+    public void setPublicBean(PublicBean publicBean) {
+        this.publicBean = publicBean;
     }
 }

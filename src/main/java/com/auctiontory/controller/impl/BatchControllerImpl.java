@@ -43,4 +43,9 @@ public class BatchControllerImpl implements BatchAuctionController {
     public boolean isActive(Integer id) {
         return batchDao.isActive(id);
     }
+
+    @Override
+    public boolean isExist(String auctionTitle){
+        return batchDao.isExist(auctionTitle);
+    }
 }
