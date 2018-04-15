@@ -8,7 +8,9 @@ import com.auctiontory.model.entity.UserBatchBid;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
@@ -109,5 +111,12 @@ public class BatchAuctionDaoImpl implements BatchAuctionDAO, Serializable {
         auctionDate = batchAuction.getDeadline();
         isActive = nowDate.before(auctionDate);
         return isActive;
+    }
+
+    @Override
+    public boolean isExist(String auctionTitle){
+        Query query = em.createNamedQuery("BatchAuction.findByTitle");
+        List auc =  query.setParameter("title",auctionTitle).getResultList();
+        return auc.size()==0? false : true;
     }
 }

@@ -6,4 +6,5 @@ public interface BatchAuctionController extends IControllerBase<BatchAuction>{
 
     boolean isActive(Integer id);
 
+    boolean isExist(String auctionTitle);
 }

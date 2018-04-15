@@ -21,6 +21,8 @@ public class AddBatchAuctionBean {
     private BatchAuctionController batchControllerImpl;
     @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
+    @ManagedProperty(value = "#{publicBean}")
+    private PublicBean publicBean;
     @Inject
     private UserController userControllerImpl;
 
@@ -28,7 +30,7 @@ public class AddBatchAuctionBean {
     private List<BatchProduct> auctionProducts = new ArrayList();
     private BatchProduct productAdded = new BatchProduct();
 
-    private String msg , errMsg;
+    private String msg , errMsg ;
     private int productsNumber;
 
 
@@ -37,11 +39,17 @@ public class AddBatchAuctionBean {
         auctionProducts.add(productAdded);
         productAdded = new BatchProduct();
         errMsg = null;
+        publicBean.setUsedAuctionCurrently("batch");
         return null;
     }
 
     public String saveAuction() {
         if(auctionProducts.size()>0) {
+            boolean titleExisted = batchControllerImpl.isExist(auctionAdded.getTitle());
+            if(titleExisted){
+                errMsg = "sorry, this auction title is currently used";
+                return "addAuction";
+            }
 
             for (BatchProduct p : auctionProducts) {
                 p.setAuctionId(auctionAdded);
@@ -120,5 +128,13 @@ public class AddBatchAuctionBean {
 
     public void setProductsNumber(int productsNumber) {
         this.productsNumber = productsNumber;
+    }
+
+    public PublicBean getPublicBean() {
+        return publicBean;
+    }
+
+    public void setPublicBean(PublicBean publicBean) {
+        this.publicBean = publicBean;
     }
 }

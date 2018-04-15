@@ -33,4 +33,9 @@ public class PartsControllerImpl implements PartsAuctionController {
     public PartsAuction get(Serializable id) {
         return partsDao.get(id);
     }
+
+    @Override
+    public boolean isExist(String auctionTitle){
+        return partsDao.isExist(auctionTitle);
+    }
 }
