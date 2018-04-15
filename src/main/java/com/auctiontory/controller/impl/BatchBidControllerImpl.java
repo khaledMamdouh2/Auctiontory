@@ -26,9 +26,8 @@ public class BatchBidControllerImpl implements BatchBidController {
     }
 
     @Override
-    public boolean bid(int userId, int batchAuctionId, int bidAmount) throws AlreadyHighestBidderException,AuctionAlreadyClosedException {
+    public boolean bid(int userId, int batchAuctionId, int bidAmount) throws AlreadyHighestBidderException, AuctionAlreadyClosedException {
         boolean bid = batchBidDao.bid(userId, batchAuctionId, bidAmount);
-        batchAuctionListener.upadeView();
         return bid;
     }
 

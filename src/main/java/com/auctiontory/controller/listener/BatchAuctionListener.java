@@ -3,12 +3,10 @@ package com.auctiontory.controller.listener;
 
 import com.auctiontory.view.bean.ViewBatchAuctionBean;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
 
-@Named
-@ApplicationScoped
 public class BatchAuctionListener {
     @Inject
     private ViewBatchAuctionBean viewBatchAuctionBean;
@@ -16,7 +14,7 @@ public class BatchAuctionListener {
     public BatchAuctionListener() {
     }
 
-    public void upadeView() {
+    public void upadeView(Object o) {
         if (viewBatchAuctionBean != null) {
                 viewBatchAuctionBean.notifyUpdate();
         }

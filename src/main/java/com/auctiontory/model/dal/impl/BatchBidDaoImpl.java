@@ -25,9 +25,6 @@ public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
     private EntityManager em;
 
     @Inject
-    BatchAuctionListener batchAuctionListener;
-
-    @Inject
     private BatchAuctionDAO batchDao;
 
     @Inject
@@ -81,7 +78,6 @@ public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
                             em.persist(userBatchBid);
                             bid = true;
                         }
-                        batchAuctionListener.upadeView();
                     }
                 }
             }

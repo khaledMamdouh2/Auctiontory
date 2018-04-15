@@ -5,10 +5,8 @@ import com.auctiontory.controller.listener.BatchAuctionListener;
 import com.auctiontory.model.dal.BatchAuctionDAO;
 import com.auctiontory.model.entity.BatchAuction;
 
-import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,17 +24,14 @@ public class BatchControllerImpl implements BatchAuctionController {
 
     public void save(BatchAuction domain) {
         batchDao.save(domain);
-        batchAuctionListener.upadeView();
     }
 
     public void update(BatchAuction domain) {
         batchDao.update(domain);
-        batchAuctionListener.upadeView();
     }
 
     public void delete(BatchAuction domain) {
         batchDao.delete(domain);
-        batchAuctionListener.upadeView();
     }
 
 
@@ -46,7 +41,6 @@ public class BatchControllerImpl implements BatchAuctionController {
 
     @Override
     public boolean isActive(Integer id) {
-        batchAuctionListener.upadeView();
         return batchDao.isActive(id);
     }
 }

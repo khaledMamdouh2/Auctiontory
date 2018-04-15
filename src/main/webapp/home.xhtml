@@ -43,7 +43,6 @@
                 <script type="text/javascript">
                     function socketListener(message, channel, event) {
                         var c = "";
-
                         auctions = JSON.parse(message);
                         console.log(auctions);
                         for (i = 0; i &lt; auctions.length; i++) {
