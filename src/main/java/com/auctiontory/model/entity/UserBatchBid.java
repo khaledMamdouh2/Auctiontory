@@ -5,6 +5,8 @@
  */
 package com.auctiontory.model.entity;
 
+import com.auctiontory.controller.listener.BatchAuctionInterceptor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,7 +24,7 @@ import java.io.Serializable;
         , @NamedQuery(name = "UserBatchBid.findByBatchId", query = "SELECT u FROM UserBatchBid u WHERE u.userBatchBidPK.batchId = :batchId")
         , @NamedQuery(name = "UserBatchBid.findByBatchIdAndUserId", query = "SELECT u FROM UserBatchBid u WHERE u.userBatchBidPK.batchId = :batchId and u.userBatchBidPK.userId = :userId")
         , @NamedQuery(name = "UserBatchBid.findByPrice", query = "SELECT u FROM UserBatchBid u WHERE u.price = :price")})
-@EntityListeners(com.auctiontory.controller.listener.BatchAuctionListener.class)
+@EntityListeners(BatchAuctionInterceptor.class)
 public class UserBatchBid implements Serializable, Comparable<UserBatchBid> {
 
     private static final long serialVersionUID = 1L;

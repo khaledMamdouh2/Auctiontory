@@ -5,11 +5,6 @@
  */
 package com.auctiontory.model.entity;
 
-import com.auctiontory.controller.listener.BatchAuctionListener;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

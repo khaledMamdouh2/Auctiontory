@@ -1,12 +1,17 @@
 package com.auctiontory.controller.impl;
 
 import com.auctiontory.controller.BatchAuctionController;
-import com.auctiontory.controller.listener.BatchAuctionListener;
+import com.auctiontory.controller.listener.BatchAuctionInterceptor;
 import com.auctiontory.model.dal.BatchAuctionDAO;
 import com.auctiontory.model.entity.BatchAuction;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
+import javax.interceptor.Interceptors;
+import javax.transaction.UserTransaction;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,7 +21,8 @@ public class BatchControllerImpl implements BatchAuctionController {
     private BatchAuctionDAO batchDao;
 
     @Inject
-    BatchAuctionListener batchAuctionListener;
+    BatchAuctionInterceptor batchAuctionInterceptor;
+
 
     public List<BatchAuction> loadAll() {
         return batchDao.loadAll();
@@ -45,7 +51,7 @@ public class BatchControllerImpl implements BatchAuctionController {
     }
 
     @Override
-    public boolean isExist(String auctionTitle){
+    public boolean isExist(String auctionTitle) {
         return batchDao.isExist(auctionTitle);
     }
 }

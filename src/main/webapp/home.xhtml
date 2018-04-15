@@ -48,24 +48,26 @@
                         for (i = 0; i &lt; auctions.length; i++) {
                             var auction = auctions[i];
                             var id = 'auctiontory' + auction.id;
-                            bidsCount = $("#" + id).find(".bidsCount");
-                            bidsCount[0].innerHTML = 'Bids: ' + auction.numberOfBids;
+                            if ($("#" + id)[0] != null &amp;&amp; $("#" + id)[0] != undefined) {
+                                bidsCount = $("#" + id).find(".bidsCount");
+                                bidsCount[0].innerHTML = 'Bids: ' + auction.numberOfBids;
 
-                            if (auction.highestBidderId == null) {
-                                bidArea = $("#" + id).find(".bidArea");
-                                bidArea[0].innerHTML = `<label class="label label-fill label-warning">No Bids Yet</label>`;
-                            }
-                            else {
-                                bidArea = $("#" + id).find(".bidArea");
-                                bidArea[0].innerHTML = ` <p class="text-muted">
+                                if (auction.highestBidderId == null) {
+                                    bidArea = $("#" + id).find(".bidArea");
+                                    bidArea[0].innerHTML = `<label class="label label-fill label-warning">No Bids Yet</label>`;
+                                }
+                                else {
+                                    bidArea = $("#" + id).find(".bidArea");
+                                    bidArea[0].innerHTML = ` <p class="text-muted">
                                                 <span class="highestBid">Highest: $` + auction.highestBid + ` </span>
                                                 <h:panelGroup
                                                         rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}"
                                                         styleClass="highestBidder">by ` + auction.highestBidderId.userName + ` </h:panelGroup>
                                             </p>`;
 
-                            }
+                                }
 
+                            }
                         }
                     }
                 </script>

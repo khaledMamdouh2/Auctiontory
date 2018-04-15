@@ -106,6 +106,7 @@ public class ViewBatchBean {
         try {
             bidTry = true;
             boolean bid = batchBidController.bid(userBean.getUser().getId(), batchAuction.getId(), price);
+
             if (bid) {
                 message = "Successfully Bid";
             } else {

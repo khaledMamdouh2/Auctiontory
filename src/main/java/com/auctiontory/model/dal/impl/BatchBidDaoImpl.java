@@ -1,17 +1,16 @@
 package com.auctiontory.model.dal.impl;
 
-import com.auctiontory.controller.listener.BatchAuctionListener;
 import com.auctiontory.model.dal.BatchAuctionDAO;
 import com.auctiontory.model.dal.BatchBidDAO;
 import com.auctiontory.model.dal.UserDAO;
 import com.auctiontory.model.dal.exception.AlreadyHighestBidderException;
 import com.auctiontory.model.dal.exception.AuctionAlreadyClosedException;
-import com.auctiontory.model.dal.exception.BiddingException;
 import com.auctiontory.model.entity.BatchAuction;
 import com.auctiontory.model.entity.User;
 import com.auctiontory.model.entity.UserBatchBid;
 import com.auctiontory.model.entity.UserBatchBidPK;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -20,6 +19,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Named("batchBidDao")
+@Stateless
 public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
     @PersistenceContext(unitName = "AuctionsPU")
     private EntityManager em;
