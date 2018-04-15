@@ -5,6 +5,8 @@
  */
 package com.auctiontory.model.entity;
 
+import com.auctiontory.view.bean.converters.DateConverter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -199,6 +201,8 @@ public class BatchAuction implements Serializable {
         this.minBid = batchAuction.minBid;
         this.highestBid = batchAuction.highestBid;
         this.active = batchAuction.active;
+        this.ownerId = new User();
+        this.ownerId.setUserName(batchAuction.getOwnerId().getUserName());
         if (batchAuction.getHighestBidderId() != null) {
             this.highestBidderId = new User();
             this.highestBidderId.setId(batchAuction.getHighestBidderId().getId());
