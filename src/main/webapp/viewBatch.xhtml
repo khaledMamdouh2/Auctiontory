@@ -5,7 +5,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+>
 <ui:composition template="parent_template.xhtml">
     <ui:define name="title">
         Batch details
@@ -142,10 +144,21 @@
                     viewBatch.batchAuction.active
                     }">
                 <h:form>
-                    <h:commandButton value="Bid" action="#{viewBatch.bid}" styleClass="btn btn-lg btn-info btn-fill"/>
-                    <br/>
-                    <h:panelGroup rendered="#{viewBatch.bidTry}">
-                        <p>#{viewBatch.message}</p>
+                    <h:panelGroup styleClass="form-group">
+                        <h:inputText p:type="number" value="#{viewBatch.price}"
+                                     p:min="#{viewBatch.batchAuction.minBid}" p:max="99999999999"
+                                     styleClass="form-control"/>
+                        <br/>
+                        <h:commandButton value="Bid" action="#{viewBatch.bid}" styleClass="btn btn-lg btn-info btn-fill"
+                                         p:data-toggle="tooltip"
+                                         p:data-placement="top"
+                                         p:title="With $100+ to highest bid or using specific value"
+                                         p:data-trigger="manual"
+                        />
+                        <br/>
+                        <h:panelGroup rendered="#{viewBatch.bidTry}">
+                            <p>#{viewBatch.message}</p>
+                        </h:panelGroup>
                     </h:panelGroup>
                 </h:form>
             </h:panelGroup>

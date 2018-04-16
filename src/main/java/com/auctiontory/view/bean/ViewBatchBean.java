@@ -35,6 +35,8 @@ public class ViewBatchBean {
 
     private String message;
 
+    private Integer price;
+
     public void initJoined() {
         bidPast = batchBidController.alreadyBid(userBean.getUser().getId(), batchAuction.getId());
     }
@@ -97,12 +99,28 @@ public class ViewBatchBean {
         this.message = message;
     }
 
+    public int getPrice() {
+        if (price == null)
+            price = new Integer(0);
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public String bid() {
-        int price;
-        if (batchAuction.getHighestBid() == 0) {
-            price = batchAuction.getMinBid();
-        } else {
-            price = batchAuction.getHighestBid() + 100;
+        if (price == null || price == 0) {
+            if (batchAuction.getHighestBid() == 0) {
+                if (batchAuction.getMinBid() == 0) {
+                    price = batchAuction.getMinBid() + 100;
+                } else {
+                    price = batchAuction.getMinBid();
+                }
+
+            } else {
+                price = batchAuction.getHighestBid() + 100;
+            }
         }
         try {
             bidTry = true;

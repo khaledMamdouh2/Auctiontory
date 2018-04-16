@@ -100,10 +100,9 @@
                                         Ends at: <h:outputText value="#{auction.deadline}" converter="dateConvert"/>
                                     </h5>
                                     <h:form>
-                                        <h:inputHidden value="#{auction.id}" binding="#{viewBatchAuctionBean.batchIdInput}"/>
                                         <h:commandButton styleClass="btn btn-info btn-block btn-fill"
                                                          value="Go to Details"
-                                                         action="#{viewBatchAuctionBean.visitAuctionDetails()}"
+                                                         action="#{viewBatchAuctionBean.visitAuctionDetailsNormally(auction.id)}"
                                         />
                                     </h:form>
                                 </center>
