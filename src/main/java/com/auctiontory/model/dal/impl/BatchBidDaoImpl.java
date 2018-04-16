@@ -15,7 +15,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named("batchBidDao")
@@ -86,6 +88,21 @@ public class BatchBidDaoImpl implements BatchBidDAO, Serializable {
         }
 
         return bid;
+    }
+
+    @Override
+    public List<User> getOtherBidders(int userId, int batchAuctionId) {
+        ArrayList<User> otherBidders = new ArrayList<>();
+        Query query = em.createNamedQuery("UserBatchBid.findByBatchId");
+        List<UserBatchBid> auctionBids = query.setParameter("batchId",batchAuctionId).getResultList();
+        if(auctionBids.size()>1){
+            for(UserBatchBid bid: auctionBids){
+                if(bid.getUser().getId() != userId){
+                    otherBidders.add(bid.getUser());
+                }
+            }
+        }
+        return otherBidders;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.auctiontory.controller.listener.BatchAuctionInterceptor;
 import com.auctiontory.model.dal.BatchBidDAO;
 import com.auctiontory.model.dal.exception.AlreadyHighestBidderException;
 import com.auctiontory.model.dal.exception.AuctionAlreadyClosedException;
+import com.auctiontory.model.entity.User;
 import com.auctiontory.model.entity.UserBatchBid;
 
 import javax.annotation.Resource;
@@ -65,6 +66,11 @@ public class BatchBidControllerImpl implements BatchBidController {
 
 
         return bid;
+    }
+
+    @Override
+    public List<User> getOtherBidders(int userId, int batchAuctionId) {
+        return batchBidDao.getOtherBidders(userId , batchAuctionId);
     }
 
     @Override

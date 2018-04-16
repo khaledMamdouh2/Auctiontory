@@ -30,6 +30,7 @@ public class ViewBatchBean {
     @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
 
+
     private boolean bidPast, bidTry;
 
     private String message;
