@@ -28,6 +28,8 @@ public class ViewPartsAuctionBean {
 
     private HtmlInputHidden partIdInput;
 
+    @ManagedProperty("#{viewPartsBean}")
+    private ViewPartsBean viewPartsBean;
 
     private Integer partsId;
 
@@ -48,17 +50,6 @@ public class ViewPartsAuctionBean {
         Gson gson = new Gson();
         String auctionStr = gson.toJson(new PartsAuction(partsAuction));
         partsAuctionsChannel.send(auctionStr);
-    }
-
-    public void notifyUpdate() {
-//        fillAuctions();
-//        Gson gson = new Gson();
-//        ArrayList<PartsAuction> partsAuctionsGson = new ArrayList<>();
-//        for (PartsAuction partsAuction : partsAuctions) {
-//            partsAuctionsGson.add(new PartsAuction(ViewPartsAuctionBean.partsAuction));
-//        }
-//        String auctionsStr = gson.toJson(partsAuctionsGson);
-//        partsAuctionsChannel.send(auctionsStr);
     }
 
     public PartsAuctionController getPartsControllerImpl() {
@@ -86,9 +77,18 @@ public class ViewPartsAuctionBean {
         this.partsId = (Integer) this.partIdInput.getValue();
     }
 
+    public ViewPartsBean getViewPartsBean() {
+        return viewPartsBean;
+    }
+
+    public void setViewPartsBean(ViewPartsBean viewPartsBean) {
+        this.viewPartsBean = viewPartsBean;
+    }
 
     public String visitAuctionDetails() {
-        return "";
+        PartsAuction partsAuction = partsControllerImpl.get(partsId);
+        viewPartsBean.setPartsAuction(partsAuction);
+        return "viewParts";
     }
 
     public String visitAuctionDetailsNormally(int auctionId) {

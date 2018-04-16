@@ -23,9 +23,7 @@ public class PartAuctionInterceptor {
     public Object updateView(InvocationContext joinPoint) throws Exception {
         Object ret = joinPoint.proceed();
         if (viewPartsAuctionBean != null) {
-            if (joinPoint.getMethod().getName().equals("bid"))
-                viewPartsAuctionBean.notifyUpdate();
-            else if (joinPoint.getMethod().getName().equals("save") && joinPoint.getTarget().getClass().equals(PartsControllerImpl.class)) {
+            if (joinPoint.getMethod().getName().equals("save") && joinPoint.getTarget().getClass().equals(PartsControllerImpl.class)) {
                 PartsAuction partsAuction = (PartsAuction) joinPoint.getParameters()[0];
                 viewPartsAuctionBean.notifyAddAuction(partsAuction);
             }
