@@ -16,8 +16,17 @@
             <div class="img-src" style="background-image: url('assets/img/bg.jpg')"></div>
         </div>
     </ui:define>
+    <ui:define name="customJsWithScript">
+        <c:choose>
+            <c:when test="#{userBean.user.type!=null}">
+                var type = "#{userBean.user.type}";
+            </c:when>
+            <c:otherwise>
+                var type = null;
+            </c:otherwise>
+        </c:choose>
+    </ui:define>
     <ui:define name="main">
-
         <div class="main">
             <div class="container text-center">
                 <h:form rendered="false">
@@ -40,37 +49,7 @@
             </div>
             <div class="container tim-container">
                 <o:socket channel="auctionsChannel" onmessage="socketListener"/>
-                <script type="text/javascript">
-                    function socketListener(message, channel, event) {
-                        var c = "";
-                        auctions = JSON.parse(message);
-                        console.log(auctions);
-                        for (i = 0; i &lt; auctions.length; i++) {
-                            var auction = auctions[i];
-                            var id = 'auctiontory' + auction.id;
-                            if ($("#" + id)[0] != null &amp;&amp; $("#" + id)[0] != undefined) {
-                                bidsCount = $("#" + id).find(".bidsCount");
-                                bidsCount[0].innerHTML = 'Bids: ' + auction.numberOfBids;
-
-                                if (auction.highestBidderId == null) {
-                                    bidArea = $("#" + id).find(".bidArea");
-                                    bidArea[0].innerHTML = `<label class="label label-fill label-warning">No Bids Yet</label>`;
-                                }
-                                else {
-                                    bidArea = $("#" + id).find(".bidArea");
-                                    bidArea[0].innerHTML = ` <p class="text-muted">
-                                                <span class="highestBid">Highest: $` + auction.highestBid + ` </span>
-                                                <h:panelGroup
-                                                        rendered="#{ (userBean.user.type != null) and (userBean.user.type eq 'ADMIN')}"
-                                                        styleClass="highestBidder">by ` + auction.highestBidderId.userName + ` </h:panelGroup>
-                                            </p>`;
-
-                                }
-
-                            }
-                        }
-                    }
-                </script>
+                <script type="text/javascript" src="js/viewAuction.js"/>
                 <div class="row" id="auctions">
                     <jsp:forEach items="#{viewBatchAuctionBean.batchAuctions}" var="auction">
                         <h:panelGroup
@@ -121,16 +100,24 @@
                                         Ends at: <h:outputText value="#{auction.deadline}" converter="dateConvert"/>
                                     </h5>
                                     <h:form>
+                                        <h:inputHidden value="#{auction.id}" binding="#{viewBatchAuctionBean.batchIdInput}"/>
                                         <h:commandButton styleClass="btn btn-info btn-block btn-fill"
                                                          value="Go to Details"
-                                                         action="#{viewBatchAuctionBean.visitAuctionDetails(auction.id)}"
+                                                         action="#{viewBatchAuctionBean.visitAuctionDetails()}"
                                         />
                                     </h:form>
                                 </center>
                             </div>
                         </h:panelGroup>
                     </jsp:forEach>
-
+                    <h:form prependId="false">
+                        <h:inputHidden id="auctionId" binding="#{viewBatchAuctionBean.batchIdInput}"/>
+                        <h:commandButton
+                                id="showAuctionBtn"
+                                style="display: none"
+                                action="#{viewBatchAuctionBean.visitAuctionDetails()}"
+                        />
+                    </h:form>
                 </div>
             </div>
             <!-- end container -->
