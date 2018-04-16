@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,12 @@ public class PartsAuction implements Serializable {
     @ManyToOne
     private User ownerId;
 
+    @Transient
+    private boolean active;
+
+    @Transient
+    private ArrayList<User> bidders;
+
     public PartsAuction() {
     }
 
@@ -61,6 +68,16 @@ public class PartsAuction implements Serializable {
         this.id = id;
         this.deadline = deadline;
         this.title = title;
+    }
+
+    public PartsAuction(PartsAuction partsAuction) {
+        this.id = partsAuction.id;
+        this.title = partsAuction.title;
+        this.deadline = partsAuction.deadline;
+        this.active = partsAuction.active;
+        this.ownerId = new User();
+        this.ownerId.setUserName(partsAuction.getOwnerId().getUserName());
+
     }
 
     public Integer getId() {
@@ -128,5 +145,20 @@ public class PartsAuction implements Serializable {
     public String toString() {
         return "com.mahrous.model.entity.PartsAuction[ id=" + id + " ]";
     }
-    
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public ArrayList<User> getBidders() {
+        return bidders;
+    }
+
+    public void setBidders(ArrayList<User> bidders) {
+        this.bidders = bidders;
+    }
 }
