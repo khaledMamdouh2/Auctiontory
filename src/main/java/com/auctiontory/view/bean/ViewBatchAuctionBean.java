@@ -89,6 +89,12 @@ public class ViewBatchAuctionBean {
         this.viewBatchBean = viewBatchBean;
     }
 
+    public String visitAuctionDetailsNormally(int auctionId) {
+        this.batchId = auctionId;
+        return visitAuctionDetails();
+    }
+
+
     public String visitAuctionDetails() {
         BatchAuction batchAuction = batchControllerImpl.get(batchId);
         viewBatchBean.setBatchAuction(batchAuction);
