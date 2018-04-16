@@ -29,10 +29,10 @@ function socketListener(message, channel, event) {
     }
     else {
         var auction = auctions;
-        var auctionDate = new Date("Apr 24, 2018 10:55:00 AM");
+        var auctionDate = new Date(auction.deadline);
 
 
-        var formattedDate = auctionDate.getDate() + "/" + auctionDate.getMonth() + 1 + "/" + auctionDate.getFullYear() + " " + auctionDate.getHours() + ":" + auctionDate.getMinutes();
+        var formattedDate = auctionDate.getDate() + "/" + eval(auctionDate.getMonth() + 1) + "/" + auctionDate.getFullYear() + " " + auctionDate.getHours() + ":" + auctionDate.getMinutes();
         var auctionHtml =
             `
                             <div class="col-sm-3" style="margin-bottom: 40px" id="auctiontory` + auction.id + `">
