@@ -4,6 +4,7 @@ import com.auctiontory.controller.BatchAuctionController;
 import com.auctiontory.controller.BatchBidController;
 import com.auctiontory.model.dal.exception.AuctionAlreadyClosedException;
 import com.auctiontory.model.entity.BatchAuction;
+import com.auctiontory.model.entity.User;
 import com.google.gson.Gson;
 import org.omnifaces.cdi.Push;
 import org.omnifaces.cdi.PushContext;
@@ -15,6 +16,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
+import java.util.List;
 
 @ManagedBean
 @ApplicationScoped
@@ -32,6 +34,10 @@ public class ViewBatchAuctionBean {
     @Inject
     @Push
     private PushContext auctionsChannel;
+
+    @Inject
+    @Push
+    private PushContext notificationsChannel;
 
     private ArrayList<BatchAuction> batchAuctions;
 
@@ -57,6 +63,14 @@ public class ViewBatchAuctionBean {
         }
         String auctionsStr = gson.toJson(batchAuctionsGson);
         auctionsChannel.send(auctionsStr);
+    }
+
+    public void notifyAuctionCompetitors(List<User> bidders , String auctionName){
+        String notificationStr = auctionName;
+        for(User bidder : bidders){
+            notificationStr += ( "-"+bidder.getId() ); //seperating Ids with delimiter
+        }
+        notificationsChannel.send(notificationStr);
     }
 
     public BatchAuctionController getBatchControllerImpl() {

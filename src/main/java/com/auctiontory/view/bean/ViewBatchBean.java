@@ -30,6 +30,9 @@ public class ViewBatchBean {
     @ManagedProperty(value = "#{userBean}")
     private UserBean userBean;
 
+    @ManagedProperty(value = "#{viewBatchAuctionBean}")
+    private ViewBatchAuctionBean viewBatchAuctionBean;
+
     private boolean bidPast, bidTry;
 
     private String message;
@@ -109,6 +112,10 @@ public class ViewBatchBean {
 
             if (bid) {
                 message = "Successfully Bid";
+                List<User> competitors = batchBidController.getOtherBidders(userBean.getUser().getId() , batchAuction.getId());
+                if(competitors.size() > 0){
+                    viewBatchAuctionBean.notifyAuctionCompetitors(competitors , batchAuction.getTitle());
+                }
             } else {
                 message = "Couldn't bid, probably this is not the highest price, please retry";
             }
