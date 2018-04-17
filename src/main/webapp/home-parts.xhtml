@@ -89,6 +89,7 @@
                                     <h:form>
                                         <h:commandButton styleClass="btn btn-info btn-block btn-fill"
                                                          value="Go to Details"
+                                                         disabled="#{userBean.user.type==null}"
                                                          action="#{viewPartsAuctionBean.visitAuctionDetailsNormally(auction.id)}"
                                         />
                                     </h:form>
