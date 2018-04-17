@@ -75,10 +75,10 @@ public class PartsBidDaoImpl implements PartsBidDAO {
                             em.persist(userPartBid);
                             bid = true;
                         } else {
-                            UserBatchBidPK userBatchBidPK = new UserBatchBidPK(userId, partProductId);
-                            UserBatchBid userBatchBid = new UserBatchBid(userBatchBidPK);
-                            userBatchBid.setPrice(bidAmount);
-                            em.persist(userBatchBid);
+                            UserPartBidPK userPartBidPK = new UserPartBidPK(userId, partProductId);
+                            UserPartBid userPartBid = new UserPartBid(userPartBidPK);
+                            userPartBid.setPrice(bidAmount);
+                            em.persist(userPartBid);
                             bid = true;
                         }
                     }

@@ -102,11 +102,6 @@ public class ViewPartsBean {
     }
 
     public String getMessage() {
-        if (bidTry) {
-            bidTry = false;
-        } else {
-            setMessage("");
-        }
         return message;
     }
 
@@ -143,7 +138,7 @@ public class ViewPartsBean {
         }
     }
 
-    public String bid() {
+    public String bid(int partsProductId) {
         partsAuction.getPartsProductList().forEach((a) -> {
             if (a.getId().equals(partsProductId)) {
                 partsProduct = a;
