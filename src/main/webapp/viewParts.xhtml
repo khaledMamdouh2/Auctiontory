@@ -4,8 +4,148 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="This is parts auction : #{viewPartsBean.partsAuction.title}"/>
-</f:view>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+    <ui:composition template="parent_template.xhtml">
+    <ui:define name="title">
+        Batch details
+    </ui:define>
+    <ui:define name="main">
+        <div class="container" style="margin-top: 3%;">
+            <div class="tim-title">
+                <h2>Auction Summary</h2>
+            </div>
+            <hr/>
+            <div class="row">
+
+            </div>
+
+            <div class="tim-typo">
+                <h4><span class="tim-note">Title</span>#{viewParts.partsAuction.title}</h4>
+            </div>
+
+            <div class="tim-typo">
+                <h4><span class="tim-note">Deadline</span><h:outputText
+                        converter="dateConvert" value="#{viewParts.partsAuction.deadline}"/></h4>
+            </div>
+
+            <h:panelGroup rendered="#{userBean.user.type eq 'ADMIN'}">
+                <div class="tim-typo">
+                    <h4><span class="tim-note">Owner</span> #{viewParts.partsAuction.ownerId.userName}</h4>
+                </div>
+            </h:panelGroup>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tim-title">
+                        <h3>Products</h3>
+                    </div>
+                    <hr/>
+                    <div id="acordeon">
+                        <div class="panel-group" id="accordion">
+                            <c:forEach items="#{viewParts.partsAuction.partsProductList}" var="product">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" href="##{product.id}" class="state-open">
+                                                <span class="fa fa-caret-right"/> #{product.name}
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="#{product.id}" class="panel-collapse gsdk-collapse collapse"
+                                         style="height: 0px;">
+                                        <div class="panel-body">
+                                            <p style="padding: 0px 0px 0px 22px;overflow-wrap: break-word">#{product.description}</p>
+
+                                            <div class="tim-title">
+                                                <h3>Bids</h3>
+                                                <hr/>
+                                            </div>
+                                            <table class="table table-hover table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <h:panelGroup rendered="#{userBean.user.type eq 'ADMIN'}">
+                                                        <th>Bidder Name</th>
+                                                    </h:panelGroup>
+                                                    <th>Bid amount</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <c:choose>
+                                                    <c:when test="#{viewParts.partsProduct.userPartBidList.size() eq 0}">
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                <center style="font-size: x-large;">No bids!</center>
+                                                            </td>
+                                                        </tr>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:forEach items="#{viewParts.partsProduct.userPartBidList}" var="bid" varStatus="i">
+                                                            <tr>
+                                                                <td>
+                                                                    #{i.index+1}
+                                                                </td>
+                                                                <h:panelGroup rendered="#{userBean.user.type eq 'ADMIN'}">
+                                                                    <td>
+                                                                        #{bid.user.userName}
+                                                                    </td>
+                                                                </h:panelGroup>
+                                                                <td>
+                                                                    #{bid.price}
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                        <h:panelGroup
+                                                rendered="#{
+                    userBean.user.type !=null
+                    and userBean.user.type != 'ADMIN'
+                    and userBean.user.type != 'SUPPLIER'
+                    and userBean.user.userName != viewParts.partsAuction.ownerId.userName
+                    and
+                    viewParts.partsAuction.active
+                    }">
+                                            <h:form>
+                                                <h:panelGroup styleClass="form-group">
+                                                    <h:inputText p:type="number" value="#{viewParts.price}"
+                                                                 p:min="#{viewParts.partsProduct.minBid}" p:max="99999999999"
+                                                                 styleClass="form-control"/>
+                                                    <br/>
+                                                    <h:commandButton value="Bid" action="#{viewParts.bid}" styleClass="btn btn-lg btn-info btn-fill"
+                                                                     p:data-toggle="tooltip"
+                                                                     p:data-placement="top"
+                                                                     p:title="With $100+ to highest bid or using specific value"
+                                                                     p:data-trigger="manual"
+                                                    />
+                                                    <br/>
+                                                    <h:panelGroup rendered="#{viewParts.bidTry}">
+                                                        <p>#{viewParts.message}</p>
+                                                    </h:panelGroup>
+                                                </h:panelGroup>
+                                            </h:form>
+                                        </h:panelGroup>
+                                    </div>
+                                </div>
+
+                            </c:forEach>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </ui:define>
+    </ui:composition>
 </html>

@@ -52,6 +52,16 @@ public class PartsProduct implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "partsProduct")
     private List<UserPartBid> userPartBidList;
 
+    @Transient
+    private Integer highestBid;
+
+    @Transient
+    private User highestBidderId;
+
+    @Transient
+    private Integer numberOfBids;
+
+
     public PartsProduct() {
     }
 
@@ -138,5 +148,28 @@ public class PartsProduct implements Serializable {
     public String toString() {
         return "com.mahrous.model.entity.PartsProduct[ id=" + id + " ]";
     }
-    
+
+    public Integer getHighestBid() {
+        return highestBid;
+    }
+
+    public void setHighestBid(Integer highestBid) {
+        this.highestBid = highestBid;
+    }
+
+    public User getHighestBidderId() {
+        return highestBidderId;
+    }
+
+    public void setHighestBidderId(User highestBidderId) {
+        this.highestBidderId = highestBidderId;
+    }
+
+    public Integer getNumberOfBids() {
+        return numberOfBids;
+    }
+
+    public void setNumberOfBids(Integer numberOfBids) {
+        this.numberOfBids = numberOfBids;
+    }
 }

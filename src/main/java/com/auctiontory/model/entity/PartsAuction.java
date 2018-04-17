@@ -51,6 +51,8 @@ public class PartsAuction implements Serializable {
     @ManyToOne
     private User ownerId;
 
+
+
     @Transient
     private boolean active;
 
@@ -161,4 +163,6 @@ public class PartsAuction implements Serializable {
     public void setBidders(ArrayList<User> bidders) {
         this.bidders = bidders;
     }
+
+
 }
