@@ -10,6 +10,7 @@ import com.auctiontory.model.entity.PartsProduct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.html.HtmlInputHidden;
 import javax.inject.Inject;
 
 @ManagedBean(name = "viewParts")
@@ -19,12 +20,16 @@ public class ViewPartsBean {
     @Inject
     private PartsAuction partsAuction;
 
-    @Inject
     private PartsProduct partsProduct;
+
+    private Integer partsProductId;
+
+    private HtmlInputHidden htmlInputHidden;
 
     @Inject
     private PartsAuctionController partsAuctionController;
 
+    @Inject
     private PartsBidController partsBidController;
 
     @ManagedProperty(value = "#{userBean}")
@@ -37,11 +42,11 @@ public class ViewPartsBean {
     private Integer price;
 
     public void initJoined() {
-        bidPast = partsBidController.alreadyBid(userBean.getUser().getId(),partsProduct.getId(), partsAuction.getId());
+        bidPast = partsBidController.alreadyBid(userBean.getUser().getId(), partsProduct.getId(), partsAuction.getId());
     }
 
     public PartsAuction getPartsAuction() {
-        return partsAuctionController.loadAll().get(0);
+        return partsAuction;
     }
 
     public void setPartsAuction(PartsAuction partsAuction) {
@@ -97,9 +102,9 @@ public class ViewPartsBean {
     }
 
     public String getMessage() {
-        if(bidTry){
-            bidTry=false;
-        }else{
+        if (bidTry) {
+            bidTry = false;
+        } else {
             setMessage("");
         }
         return message;
@@ -119,37 +124,61 @@ public class ViewPartsBean {
         this.price = price;
     }
 
-    public String bid(){
-        if (price == null || price == 0) {
-            if(partsProduct.getHighestBid()==0){
-                if(partsProduct.getMinBid()==0){
-                    price=partsProduct.getMinBid()+100;
-                }else {
+    public Integer getPartsProductId() {
+        return partsProductId;
+    }
 
-                    price=partsProduct.getMinBid();
+    public void setPartsProductId(Integer partsProductId) {
+        this.partsProductId = partsProductId;
+    }
+
+    public HtmlInputHidden getHtmlInputHidden() {
+        return htmlInputHidden;
+    }
+
+    public void setHtmlInputHidden(HtmlInputHidden htmlInputHidden) {
+        this.htmlInputHidden = htmlInputHidden;
+        if (htmlInputHidden != null && htmlInputHidden.getValue() != null) {
+            partsProductId = (Integer) htmlInputHidden.getValue();
+        }
+    }
+
+    public String bid() {
+        partsAuction.getPartsProductList().forEach((a) -> {
+            if (a.getId().equals(partsProductId)) {
+                partsProduct = a;
+            }
+        });
+        if (price == null || price == 0) {
+            if (partsProduct.getHighestBid() == 0) {
+                if (partsProduct.getMinBid() == 0) {
+                    price = partsProduct.getMinBid() + 100;
+                } else {
+
+                    price = partsProduct.getMinBid();
                 }
-            }else {
+            } else {
                 price = partsProduct.getHighestBid() + 100;
             }
         }
-        try{
+        try {
             bidTry = true;
-           // boolean bid = partsBidController.bid(userBean.getUser().getId(),partsProduct.getId(), partsAuction.getId(), price);
-            boolean bid = true;
-            if (bid) {
+            boolean successfulBid = partsBidController.bid(userBean.getUser().getId(), partsProduct.getId(), partsAuction.getId(), price);
+            if (successfulBid) {
                 message = "Successfully Bid";
             } else {
                 message = "Couldn't bid, probably this is not the highest price, please retry";
             }
 
-        }catch (Exception e){}/*catch (AuctionAlreadyClosedException e) {
+        } catch (AuctionAlreadyClosedException e) {
             message = "Sorry Auction is already closed";
         } catch (AlreadyHighestBidderException e) {
             message = "You are already highest bidder";
-        }*/
+        }
         refreshAuction();
         return "viewParts";
     }
+
     public void refreshAuction() {
         partsAuction = partsAuctionController.get(partsAuction.getId());
     }

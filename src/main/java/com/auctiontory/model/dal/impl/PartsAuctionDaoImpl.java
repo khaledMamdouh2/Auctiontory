@@ -2,6 +2,9 @@ package com.auctiontory.model.dal.impl;
 
 import com.auctiontory.model.dal.PartsAuctionDAO;
 import com.auctiontory.model.entity.PartsAuction;
+import com.auctiontory.model.entity.PartsProduct;
+import com.auctiontory.model.entity.User;
+import com.auctiontory.model.entity.UserPartBid;
 
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
@@ -22,10 +25,29 @@ public class PartsAuctionDaoImpl implements PartsAuctionDAO, Serializable {
 
         List<PartsAuction> partsAuctions = em.createNamedQuery("PartsAuction.findAll").getResultList();
 
-        // Bad solution to force loading of bids and products
-        for (PartsAuction a : partsAuctions) {
-            if (a.getPartsProductList() != null)
-                a.getPartsProductList().size();
+        for (PartsAuction partsAuction : partsAuctions) {
+            if (partsAuction.getPartsProductList() != null && partsAuction.getPartsProductList().size() > 0) {
+                List<PartsProduct> partsProducts = partsAuction.getPartsProductList();
+                for (PartsProduct partsProduct : partsProducts) {
+                    Integer highestBid = 0;
+                    User highestBidderId = null;
+
+                    List<UserPartBid> userPartBids = partsProduct.getUserPartBidList();
+                    if (userPartBids != null && userPartBids.size() > 0) {
+                        partsProduct.setNumberOfBids(userPartBids.size());
+                        for (UserPartBid userPartBid : userPartBids) {
+                            if (userPartBid.getPrice() > highestBid) {
+                                highestBid = userPartBid.getPrice();
+                                highestBidderId = userPartBid.getUser();
+                            }
+                        }
+                    }
+                    if (highestBidderId != null) {
+                        partsProduct.setHighestBidderId(highestBidderId);
+                    }
+                    partsProduct.setHighestBid(highestBid);
+                }
+            }
         }
 
         partsAuctions.forEach(auction -> {
@@ -50,8 +72,28 @@ public class PartsAuctionDaoImpl implements PartsAuctionDAO, Serializable {
 
     public PartsAuction get(Serializable id) {
         PartsAuction partsAuction = em.find(PartsAuction.class, id);
-        if (partsAuction.getPartsProductList() != null)
-            partsAuction.getPartsProductList().size();
+        if (partsAuction.getPartsProductList() != null && partsAuction.getPartsProductList().size() > 0) {
+            List<PartsProduct> partsProducts = partsAuction.getPartsProductList();
+            for (PartsProduct partsProduct : partsProducts) {
+                Integer highestBid = 0;
+                User highestBidderId = null;
+
+                List<UserPartBid> userPartBids = partsProduct.getUserPartBidList();
+                if (userPartBids != null && userPartBids.size() > 0) {
+                    partsProduct.setNumberOfBids(userPartBids.size());
+                    for (UserPartBid userPartBid : userPartBids) {
+                        if (userPartBid.getPrice() > highestBid) {
+                            highestBid = userPartBid.getPrice();
+                            highestBidderId = userPartBid.getUser();
+                        }
+                    }
+                }
+                if (highestBidderId != null) {
+                    partsProduct.setHighestBidderId(highestBidderId);
+                }
+                partsProduct.setHighestBid(highestBid);
+            }
+        }
         partsAuction.setActive(isActive(partsAuction.getId()));
         return partsAuction;
     }

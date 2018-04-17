@@ -21,6 +21,7 @@ import java.io.Serializable;
     @NamedQuery(name = "UserPartBid.findAll", query = "SELECT u FROM UserPartBid u")
     , @NamedQuery(name = "UserPartBid.findByUserId", query = "SELECT u FROM UserPartBid u WHERE u.userPartBidPK.userId = :userId")
     , @NamedQuery(name = "UserPartBid.findByPartProductId", query = "SELECT u FROM UserPartBid u WHERE u.userPartBidPK.partProductId = :partProductId")
+    , @NamedQuery(name = "UserPartBid.findByUserIdAndPartProductId", query = "SELECT u FROM UserPartBid u WHERE u.userPartBidPK.partProductId = :partProductId and u.userPartBidPK.userId = :userId")
     , @NamedQuery(name = "UserPartBid.findByPrice", query = "SELECT u FROM UserPartBid u WHERE u.price = :price")})
 public class UserPartBid implements Serializable {
 

@@ -28,7 +28,7 @@ public class BatchBidControllerImpl implements BatchBidController {
     private UserTransaction utx;
 
     @Inject
-    BatchAuctionInterceptor batchAuctionInterceptor;
+    private BatchAuctionInterceptor batchAuctionInterceptor;
 
     @Override
     public boolean alreadyBid(int userId, int batchAuctionId) {

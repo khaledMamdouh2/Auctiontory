@@ -28,7 +28,7 @@ public class ViewPartsAuctionBean {
 
     private HtmlInputHidden partIdInput;
 
-    @ManagedProperty("#{viewPartsBean}")
+    @ManagedProperty("#{viewParts}")
     private ViewPartsBean viewPartsBean;
 
     private Integer partsId;

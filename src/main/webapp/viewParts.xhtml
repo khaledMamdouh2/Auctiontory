@@ -9,7 +9,7 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 >
 
-    <ui:composition template="parent_template.xhtml">
+<ui:composition template="parent_template.xhtml">
     <ui:define name="title">
         Batch details
     </ui:define>
@@ -85,12 +85,14 @@
                                                         </tr>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <c:forEach items="#{viewParts.partsProduct.userPartBidList}" var="bid" varStatus="i">
+                                                        <c:forEach items="#{viewParts.partsProduct.userPartBidList}"
+                                                                   var="bid" varStatus="i">
                                                             <tr>
                                                                 <td>
                                                                     #{i.index+1}
                                                                 </td>
-                                                                <h:panelGroup rendered="#{userBean.user.type eq 'ADMIN'}">
+                                                                <h:panelGroup
+                                                                        rendered="#{userBean.user.type eq 'ADMIN'}">
                                                                     <td>
                                                                         #{bid.user.userName}
                                                                     </td>
@@ -119,10 +121,14 @@
                                             <h:form>
                                                 <h:panelGroup styleClass="form-group">
                                                     <h:inputText p:type="number" value="#{viewParts.price}"
-                                                                 p:min="#{viewParts.partsProduct.minBid}" p:max="99999999999"
+                                                                 p:min="#{viewParts.partsProduct.minBid}"
+                                                                 p:max="99999999999"
                                                                  styleClass="form-control"/>
                                                     <br/>
-                                                    <h:commandButton value="Bid" action="#{viewParts.bid}" styleClass="btn btn-lg btn-info btn-fill"
+                                                    <h:inputHidden value="#{product.id}"
+                                                                   binding="#{viewParts.htmlInputHidden}"/>
+                                                    <h:commandButton value="Bid" action="#{viewParts.bid}"
+                                                                     styleClass="btn btn-lg btn-info btn-fill"
                                                                      p:data-toggle="tooltip"
                                                                      p:data-placement="top"
                                                                      p:title="With $100+ to highest bid or using specific value"
@@ -147,5 +153,5 @@
             </div>
         </div>
     </ui:define>
-    </ui:composition>
+</ui:composition>
 </html>
