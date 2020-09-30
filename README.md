@@ -1,5 +1,5 @@
 # Auctiontory
-An demo auctions web app programmed by JSF, EJB and JPA that manages auctions among sellers and bidders.
+A demo auctions web app programmed by JSF, EJB and JPA that manages auctions among sellers and bidders.
 Developed during ITI 9-month program.
 
 ## Features
